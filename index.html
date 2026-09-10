@@ -39,22 +39,26 @@
   /* PORTADA: la careta, dentro de su MARCO FIJO 1920 x 1080 (entradilla de
      YouTube). La pagina no cambia de color: cambia la pieza.
 
-     LA DINAMICA, que es lo que hace que se lea como un golpe y no como una
-     transicion con efectos encima:
-       1. La flecha ACELERA hasta el impacto. No frena antes de llegar: el
-          frenazo lo produce el golpe, no la curva.
-       2. Se estira al viajar y se aplasta al chocar (squash & stretch), y el
+     LA DINAMICA (dictada por Javi): LA FLECHA ARRASTRA EL CAMBIO.
+       1. El frente entre lo claro y lo oscuro va PEGADO A LA PUNTA de la
+          flecha desde que entra en cuadro. Lo que la flecha ya ha recorrido
+          queda claro; lo que le falta sigue oscuro. El cambio no es una
+          consecuencia posterior: es el rastro del movimiento.
+       2. Por eso la flecha se ve PARTIDA EN DOS TINTAS mientras viaja: el
+          cuerpo, en territorio claro, va en negro; la punta, que todavia esta
+          en lo oscuro, va en blanco. Sale gratis de tener dos capas completas
+          (la oscura con su logo y la clara con el suyo) separadas por el
+          frente: el logo cambia de tinta por POSICION, nunca por tiempo.
+       3. La otra mitad del logo YA ESTA, esperando a la derecha en tono sobre
+          tono (#333B47 sobre la oscura). No aparece de la nada: se revela
+          cuando el frente la alcanza y pasa a negro sobre claro.
+       4. Al llegar la flecha a esa pieza hay CONTACTO: el resto del cuadro se
+          aclara de golpe (un fotograma), destello de 33 ms, sacudida
+          amortiguada, la pieza golpeada acusa el empujon y el logo asienta.
+       5. La flecha ACELERA hasta el impacto (no frena antes: el frenazo lo da
+          el golpe), se estira al viajar y se aplasta al chocar, y el
           desenfoque de movimiento es maximo donde es maxima la velocidad.
-       3. El impacto tiene DOS cuerpos: la segunda pieza acusa el golpe, sale
-          desplazada y vuelve.
-       4. El cambio de superficie NACE del punto de contacto y se propaga en
-          110 ms. No es un corte plano en todo el cuadro: es la consecuencia de
-          ese golpe, y por eso sale de ahi.
-       5. El logo cambia de tinta por POSICION, no por tiempo: hay dos capas
-          completas, la oscura con el logo blanco y la clara con el negro, y el
-          frente las separa. Donde ya paso, el logo es negro.
-       6. La energia sobrante se reparte: destello de dos fotogramas, sacudida
-          del cuadro amortiguada y asentamiento del logo. El texto espera.      */
+       6. El texto espera a que el golpe se haya asentado.                      */
   .hero{position:relative;display:grid;grid-template-columns:.86fr 1.14fr;
         gap:var(--md-sp-8);align-items:center;
         padding:calc(var(--md-sp-8) * 1.2) var(--md-margin)}
@@ -66,7 +70,9 @@
   .capa{position:absolute;inset:0}
   .capa--oscura{background:var(--md-surface-dark);color:#fff}
   .capa--clara {background:var(--md-surface-light);color:#000;
-                clip-path:circle(150% at var(--cx) var(--cy))}
+                clip-path:inset(0 0 0 0)}
+  /* la segunda pieza espera en tono sobre tono sobre la superficie oscura */
+  .capa--oscura .lockup .iso .eme{ fill:var(--md-flecha-dark) }
   .destello{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
   /* el lockup, centrado exacto y a su tamano medido: 856 de 1920 (44,6 %) con el
      simbolo a 173 de 1080 (16 % del alto = 9 % del ancho) */
@@ -83,7 +89,7 @@
 
   /* Linea de tiempo de 2,6 s. El CONTACTO cae al 42,3 % = 1,10 s. */
   .play .lienzo     { animation: md-sacude   2.6s linear forwards }
-  .play .capa--clara{ animation: md-frente   2.6s cubic-bezier(.1,.8,.3,1) forwards }
+  .play .capa--clara{ animation: md-frente   2.6s linear forwards }
   .play .flecha-iso { animation: md-vuelo    2.6s linear forwards }
   .play .eme        { animation: md-eme      2.6s linear forwards }
   .play .lockup     { animation: md-asienta  2.6s linear forwards }
@@ -95,27 +101,34 @@
      maximo donde la velocidad es maxima. En el contacto: parado en seco y
      aplastado. Luego rebota y asienta. */
   @keyframes md-vuelo {
-    0%      { transform:translateX(-560px) scale(1,1);       filter:blur(0) }
-    14%     { transform:translateX(-500px) scale(1.06,.97);  filter:blur(3px) }
-    28%     { transform:translateX(-360px) scale(1.22,.92);  filter:blur(11px) }
-    38%     { transform:translateX(-150px) scale(1.32,.88);  filter:blur(16px) }
+    0%      { transform:translateX(-420px) scale(1,1);       filter:blur(0) }
+    12%     { transform:translateX(-400px) scale(1.04,.98);  filter:blur(3px) }
+    26%     { transform:translateX(-330px) scale(1.16,.94);  filter:blur(8px) }
+    36%     { transform:translateX(-200px) scale(1.30,.89);  filter:blur(15px) }
     42.3%   { transform:translateX(7px)    scale(.88,1.12);  filter:blur(0) }
     47%     { transform:translateX(-3px)   scale(1.04,.97);  filter:blur(0) }
     52%     { transform:translateX(1px)    scale(.99,1.01);  filter:blur(0) }
     58%,100%{ transform:translateX(0)      scale(1,1);       filter:blur(0) }
   }
-  /* 3: la otra pieza acusa el golpe. Aparece en el fotograma del contacto,
-     desplazada por el impacto, y vuelve en 200 ms. */
+  /* La pieza que espera solo ACUSA el golpe: ya estaba en cuadro. */
   @keyframes md-eme {
-    0%,42.29%{ opacity:0; transform:translateX(0) }
-    42.3%    { opacity:1; transform:translateX(17px) }
-    50%      { opacity:1; transform:translateX(-3px) }
-    56%,100% { opacity:1; transform:translateX(0) }
+    0%,42.29%{ transform:translateX(0) }
+    42.3%    { transform:translateX(17px) }
+    50%      { transform:translateX(-3px) }
+    56%,100% { transform:translateX(0) }
   }
-  /* 4 y 5: el cambio de superficie NACE del contacto y llena el cuadro en 110 ms */
+  /* EL FRENTE, atado a la punta de la flecha. La correspondencia no es a ojo:
+     una unidad del isotipo son 0,09243 % del ancho del marco (el simbolo mide
+     10,37 % y su viewBox 112,164 unidades), y la punta en reposo cae en el
+     33,67 % (el punto de contacto medido). Asi, para cada desplazamiento tx de
+     la flecha, la punta esta en 33,67 + tx x 0,09243. */
   @keyframes md-frente {
-    0%,42.29%{ clip-path:circle(0% at var(--cx) var(--cy)) }
-    45.8%,100%{ clip-path:circle(150% at var(--cx) var(--cy)) }
+    0%     { clip-path:inset(0 100%    0 0) }   /* punta en -5,2 %: aun fuera */
+    12%    { clip-path:inset(0 100%    0 0) }   /* punta en -3,3 %            */
+    26%    { clip-path:inset(0 96.83%  0 0) }   /* punta en 3,2 %: entra      */
+    36%    { clip-path:inset(0 84.81%  0 0) }   /* punta en 15,2 %            */
+    42.3%  { clip-path:inset(0 65.68%  0 0) }   /* CONTACTO: el rastro llega al 34,3 % */
+    43.2%,100%{ clip-path:inset(0 0    0 0) }   /* el golpe aclara el resto   */
   }
   /* 6: destello de dos fotogramas a 60 fps, sacudida y asentamiento */
   @keyframes md-destello{ 0%,42.29%{opacity:0} 42.3%{opacity:.85} 43.6%{opacity:.85} 45.5%,100%{opacity:0} }
@@ -203,7 +216,7 @@
         <div class="destello"></div>
       </div>
     </div>
-    <p class="pie"><b>Careta · 1920 × 1080.</b> La flecha acelera, golpea la otra mitad del isotipo y el cambio de superficie sale de ese punto. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
+    <p class="pie"><b>Careta · 1920 × 1080.</b> La flecha arrastra el cambio: lo que ya ha recorrido queda claro, y por eso se la ve partida en dos tintas mientras cruza. La otra mitad del logo ya está, esperando en tono sobre tono, y se revela cuando el frente la alcanza. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
   </div>
 </header>
 
@@ -362,8 +375,8 @@
     <div><img class="pieza" src="assets/antes-intro.png" alt="Careta actual"><p class="pie"><b>Careta, hoy.</b> Degradado morado y logo a color.</p></div>
     <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido: 856 px de ancho, centrado exacto. Este es el fotograma final; <b>la careta entera es lo que se ha reproducido al abrir esta página</b>, y se puede volver a ver desde la portada.</p></div>
   </div>
-  <p class="note"><b>La careta cuenta la marca en dos segundos y medio</b>, y es lo que se ha reproducido en la portada de esta página. La flecha entra por la izquierda y viaja hasta hacer contacto con la otra mitad del isotipo; <b>en ese fotograma</b> aparece la segunda pieza y la superficie pasa de oscura a clara. No hay ningún elemento nuevo: son las dos mitades del logo que ya existen y las dos superficies del sistema.</p>
-  <p class="note"><b>El cambio es un golpe, no una transición.</b> Cuatro cosas lo hacen: ocurre <b>en un fotograma</b>, no en un fundido; cae exactamente en el instante del contacto; lleva un <b>fotograma de impacto</b> a blanco pleno de 33 ms, que el ojo retiene y hace que el corte se lea como golpe y no como un fallo; y la energía se reparte al cuadro con una sacudida de 5 px amortiguada en 100 ms y un asentamiento del logo del 3,5 %. Durante el vuelo la flecha va desenfocada, como iría en vídeo. Cuando esto se renderice a 1920 × 1080, el sonido cae en el fotograma del corte.</p>
+  <p class="note"><b>La careta cuenta la marca en dos segundos y medio</b>, y es lo que se ha reproducido en la portada de esta página. <b>La flecha arrastra el cambio</b>: el frente entre lo oscuro y lo claro va pegado a su punta desde que entra en cuadro, así que lo que el movimiento ya ha recorrido queda claro y lo que le falta sigue oscuro. Mientras cruza, <b>la propia flecha se ve partida en dos tintas</b>: el cuerpo, ya en territorio claro, en negro; la punta, todavía en lo oscuro, en blanco. La otra mitad del logo <b>ya está en cuadro</b> desde el principio, esperando en tono sobre tono, y se revela cuando el frente la alcanza. No hay ningún elemento nuevo: son las dos mitades del logo que ya existen y las dos superficies del sistema.</p>
+  <p class="note"><b>Y el contacto es un golpe, no una transición.</b> Cuando la flecha alcanza a la otra pieza, el resto del cuadro se aclara <b>en un fotograma</b>, no con un fundido; lleva un <b>fotograma de impacto</b> a blanco pleno de 33 ms, que el ojo retiene y hace que se lea como golpe y no como un fallo de reproducción; la pieza golpeada acusa el empujón y vuelve; y la energía sobrante se reparte al cuadro con una sacudida de 6 px amortiguada en 100 ms y un asentamiento del logo. La flecha, además, <b>acelera</b> hasta el impacto en vez de frenar antes de llegar (el frenazo lo da el golpe), se estira al viajar y se aplasta al chocar, y el desenfoque de movimiento es máximo donde es máxima la velocidad. Cuando esto se renderice a 1920 × 1080, el sonido cae en el fotograma del golpe.</p>
   <p class="note">Los logos de plataforma son los del cierre original, <b>Spotify y Apple Podcasts</b>, en su sitio y a su tamaño medidos (Spotify a 239 × 77 desde el margen, Apple Podcasts a 318 × 72, con 100 px entre los dos). Son marcas de terceros: no se recolorean ni se rehacen. Lo único que elegimos es la versión que contrasta con la superficie. Es también la única excepción al radio 0 del sistema, y conviene que esté escrita para que nadie intente "arreglarla".</p>
 </section>
 
