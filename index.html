@@ -36,11 +36,62 @@
                             border-bottom:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
   table.med th{font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
 
-  /* portada de la propuesta: claim a la izquierda, logo grande a la derecha */
-  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--md-sp-8);align-items:center;
-        padding:calc(var(--md-sp-8) * 1.4) var(--md-margin)}
-  .hero img{width:100%;max-width:760px;height:auto;justify-self:end}
-  @media (max-width:900px){ .hero{grid-template-columns:1fr;gap:var(--md-sp-6)} .hero img{justify-self:start;max-width:88%} }
+  /* PORTADA: la careta de la marca, en movimiento.
+     La flecha entra por la izquierda y viaja hasta hacer CONTACTO con la otra
+     mitad del isotipo. En ese fotograma aparece la segunda pieza y la superficie
+     pasa de oscura a clara con un barrido en la misma direccion que la flecha.
+     El cambio de tinta del logo NO va por tiempo: hay dos copias del lockup, la
+     blanca dentro del velo oscuro y la negra debajo, asi que el borde del
+     barrido cambia el color exactamente donde pasa. El velo se desplaza y su
+     contenido se contradesplaza, de modo que el logo blanco no se mueve.
+     Sin la clase .play (sin JS, o con movimiento reducido) se ve el fotograma
+     final, que es la portada de siempre. */
+  .hero{position:relative;overflow:hidden;display:grid;grid-template-columns:.92fr 1.08fr;
+        gap:var(--md-sp-8);align-items:center;min-height:76vh;--H:130px;
+        padding:calc(var(--md-sp-8) * 1.4) var(--md-margin);
+        background:var(--md-surface-light); color:var(--md-on-light);
+        --md-ink:var(--md-on-light); --md-ground:var(--md-surface-light)}
+  .hero > *{position:relative;z-index:1;min-width:0}
+  .velo__grid > *{min-width:0}
+  .velo{position:absolute;inset:0;z-index:2;overflow:hidden;background:var(--md-surface-dark);
+        transform:translateX(100%);will-change:transform}
+  /* El velo se desplaza y su contenido se contradesplaza: asi el logo blanco no
+     se mueve mientras el barrido pasa por encima. Se coloca por MEDIDA sobre el
+     logo negro, no replicando la rejilla, para que coincida en cualquier ancho. */
+  .velo__grid{position:absolute;inset:0}
+  .velo .lockup{position:absolute;color:#fff;display:flex;justify-content:flex-start}
+  .hero__logo{justify-self:end;width:100%;min-width:0}
+  .lockup{display:flex;align-items:center;justify-content:flex-end;color:#000}
+  .lockup .iso{height:var(--H);width:calc(var(--H) * 1.1517);flex:none;overflow:visible}
+  .lockup .iso path{fill:currentColor}
+  .word{margin-left:calc(var(--H) * 0.271);font-weight:700;font-size:calc(var(--H) * 0.438);
+        line-height:.99;letter-spacing:-.012em;white-space:nowrap}
+  .replay{margin-top:var(--md-sp-6);display:inline-block;font-size:.85rem;background:none;border:0;
+          padding:0 0 2px;cursor:pointer;font-family:var(--md-font);font-weight:700;
+          color:var(--md-coral);border-bottom:var(--md-rule) solid currentColor}
+
+  /* el contacto ocurre al 44 % de la linea de tiempo: 1,14 s de 2,6 */
+  .play .velo      { animation: md-velo    2.6s linear forwards }
+  .play .velo__grid{ animation: md-velo-i  2.6s linear forwards }
+  .play .flecha-iso{ animation: md-vuelo   2.6s cubic-bezier(.16,.84,.44,1) forwards }
+  .play .eme       { animation: md-eme     2.6s linear forwards }
+  .play .word      { animation: md-palabra 2.6s ease-out forwards }
+  .play .hero__txt { animation: md-entra   2.6s ease-out forwards }
+  @keyframes md-velo   { 0%,44%{transform:translateX(0)}  53%,100%{transform:translateX(100%)} }
+  @keyframes md-velo-i { 0%,44%{transform:translateX(0)}  53%,100%{transform:translateX(-100%)} }
+  @keyframes md-vuelo  { 0%{transform:translateX(-520px)} 44%,100%{transform:translateX(0)} }
+  /* La segunda pieza no se funde: se DESCUBRE de izquierda a derecha, como si
+     la punta de la flecha la sacara. Mismo lenguaje que el barrido del fondo. */
+  @keyframes md-eme    { 0%,43.9%{clip-path:inset(0 100% 0 0)} 50%,100%{clip-path:inset(0 0 0 0)} }
+  @keyframes md-palabra{ 0%,47%{opacity:0;transform:translateX(-14px)} 64%,100%{opacity:1;transform:translateX(0)} }
+  @keyframes md-entra  { 0%,54%{opacity:0;transform:translateY(10px)} 74%,100%{opacity:1;transform:translateY(0)} }
+  @media (prefers-reduced-motion: reduce){ .play *{animation:none !important} }
+  @media (max-width:900px){
+    .hero,.velo__grid{grid-template-columns:1fr;gap:var(--md-sp-6)}
+    .hero{min-height:0}
+    .hero__logo{justify-self:start;max-width:100%}
+    .lockup{justify-content:flex-start}
+  }
 
   .logobox{display:flex;align-items:center;justify-content:center;padding:var(--md-sp-8) var(--md-sp-6);min-height:220px;
            border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
@@ -49,19 +100,6 @@
           border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
   .isobox img{height:64px;width:auto}
   .isobox img.chico{height:32px}
-
-  /* fichas del filete */
-  .filete{padding:var(--md-sp-5);border:1px solid color-mix(in srgb, var(--md-ink) 18%, transparent);
-          display:flex;flex-direction:column;gap:var(--md-sp-4);min-height:190px;justify-content:space-between}
-  .filete .demo{display:flex;align-items:center;gap:16px;min-height:56px}
-  .filete .lbl{font-weight:700;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
-  .filete .ln{height:2px;background:var(--md-coral);flex:1}
-  .filete .pista{height:2px;background:color-mix(in srgb, var(--md-ink) 35%, transparent);width:190px;position:relative}
-  .filete .pista i{position:absolute;left:0;top:0;height:100%;width:62px;background:var(--md-coral);display:block}
-  .filete .vert{border-left:6px solid var(--md-coral);padding-left:18px}
-  .filete .vert b{display:block;font-weight:900;font-size:1.4rem;line-height:1}
-  .filete .vert span{font-size:.85rem;color:var(--md-coral)}
-  .filete p{margin:0;font-size:.88rem;line-height:1.5;opacity:.78}
 
   /* fichas de la vuelta de unificacion */
   .demo2{display:flex;flex-direction:column;gap:10px;margin:var(--md-sp-4) 0}
@@ -89,13 +127,28 @@
 </head>
 <body>
 
-<header class="hero md-dark">
-  <div>
+<header class="hero" id="portada">
+  <div class="velo" aria-hidden="true">
+    <div class="velo__grid">
+      <div class="lockup" id="lockup-blanco"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
+        <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
+        <path class="eme" style="clip-path:inset(0 0 0 0)" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
+      </svg><div class="word">Movimiento<br>Desencadenado</div></div>
+    </div>
+  </div>
+  <div class="hero__txt">
     <p class="md-label" style="color:var(--md-coral);margin:0 0 var(--md-sp-4)">Movimiento Desencadenado</p>
     <h1 class="md-claim" style="margin:0;max-width:14ch">Propuesta de <span class="md-hl">marca</span></h1>
-    <p class="md-lead" style="max-width:52ch;margin-top:var(--md-sp-5);opacity:.88">Una evolución del sistema que ya usa el canal, no un cambio de marca. Todo lo que hay aquí está medido sobre las piezas publicadas, o calculado. Estado a 10 de septiembre.</p>
+    <p class="md-lead" style="max-width:52ch;margin-top:var(--md-sp-5)">Una evolución del sistema que ya usa el canal, no un cambio de marca. Todo lo que hay aquí está medido sobre las piezas publicadas, o calculado. Estado a 10 de septiembre.</p>
+    <button class="replay" type="button" id="replay">Volver a verlo</button>
   </div>
-  <img src="assets/logo-blanco-h.png" alt="Movimiento Desencadenado">
+  <div class="hero__logo">
+    <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
+        <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
+        <path class="eme" style="clip-path:inset(0 0 0 0)" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
+      </svg>
+      <div class="word">Movimiento<br>Desencadenado</div></div>
+  </div>
 </header>
 
 <section class="sec md-light">
@@ -251,8 +304,9 @@
   </div>
   <div class="grid g2" style="margin-top:var(--md-sp-6)">
     <div><img class="pieza" src="assets/antes-intro.png" alt="Careta actual"><p class="pie"><b>Careta, hoy.</b> Degradado morado y logo a color.</p></div>
-    <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido (856 px de ancho, centrado) y debajo el filete: en movimiento crece de izquierda a derecha, que es el gesto de la marca.</p></div>
+    <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido: 856 px de ancho, centrado exacto. Este es el fotograma final; <b>la careta entera es lo que se ha reproducido al abrir esta página</b>, y se puede volver a ver desde la portada.</p></div>
   </div>
+  <p class="note"><b>La careta cuenta la marca en dos segundos.</b> La flecha entra por la izquierda y viaja hasta hacer contacto con la otra mitad del isotipo; en ese fotograma aparece la segunda pieza y la superficie pasa de oscura a clara con un barrido en la misma dirección que la flecha. Es el concepto dicho sin palabras: las piezas se juntan y el movimiento cambia el terreno. No hay ningún elemento nuevo, solo las dos mitades del logo que ya existen y las dos superficies del sistema.</p>
   <p class="note">Los logos de plataforma son los del cierre original, <b>Spotify y Apple Podcasts</b>, en su sitio y a su tamaño medidos (Spotify a 239 × 77 desde el margen, Apple Podcasts a 318 × 72, con 100 px entre los dos). Son marcas de terceros: no se recolorean ni se rehacen. Lo único que elegimos es la versión que contrasta con la superficie. Es también la única excepción al radio 0 del sistema, y conviene que esté escrita para que nadie intente "arreglarla".</p>
 </section>
 
@@ -403,7 +457,42 @@
     }
     t.style.fontSize=best+'px';
   }
-  document.fonts.ready.then(()=>{ document.querySelectorAll('.th .cita').forEach(ajusta); window.LISTO=true; });
+  // El lockup se ajusta al hueco MIDIENDO el ancho real del texto, no a ojo:
+  // ancho total = H*1.1517 (simbolo) + H*0.271 (aire) + H*0.438*r (texto),
+  // donde r es el ancho del texto por unidad de tamano de fuente y las tres
+  // proporciones estan medidas sobre el lockup de la entrega original.
+  function ajustaLockup(){
+    const hero=document.getElementById('portada');
+    const caja=hero.querySelector(':scope > .hero__logo'), word=hero.querySelector(':scope > .hero__logo .word');
+    hero.style.setProperty('--H','100px');
+    const fs=parseFloat(getComputedStyle(word).fontSize);
+    const r=word.getBoundingClientRect().width/fs;
+    const H=Math.max(52, Math.min(190, Math.floor(caja.getBoundingClientRect().width/(1.1517+0.271+0.438*r))));
+    hero.style.setProperty('--H', H+'px');
+    // el logo blanco del velo se coloca exactamente sobre el negro
+    const base=hero.querySelector(':scope > .hero__logo .lockup');
+    const blanco=document.getElementById('lockup-blanco');
+    const rb=base.getBoundingClientRect(), rh=hero.getBoundingClientRect();
+    blanco.style.left=(rb.left-rh.left)+'px';
+    blanco.style.top =(rb.top -rh.top )+'px';
+    blanco.style.width=rb.width+'px';
+    window.LOCKUP_H=H;
+  }
+  addEventListener('resize', ajustaLockup);
+
+  // la careta: se reproduce al abrir y se puede volver a ver
+  const portada = document.getElementById('portada');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function careta(){
+    if (reduce) return;
+    portada.classList.remove('play');
+    void portada.offsetWidth;              // fuerza el reinicio de la animacion
+    portada.classList.add('play');
+  }
+  document.getElementById('replay').addEventListener('click', careta);
+  if (reduce) document.getElementById('replay').hidden = true;
+
+  document.fonts.ready.then(()=>{ document.querySelectorAll('.th .cita').forEach(ajusta); ajustaLockup(); careta(); window.LISTO=true; });
   addEventListener('resize', ()=>document.querySelectorAll('.th .cita').forEach(ajusta));
 </script>
 </body>
