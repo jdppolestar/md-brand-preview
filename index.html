@@ -10,30 +10,62 @@
   *{box-sizing:border-box}
   body{margin:0;font-family:var(--md-font);background:var(--md-surface-light);color:var(--md-on-light)}
   .sec{padding:var(--md-sp-8) var(--md-margin)}
-  .sec + .sec{border-top:1px solid rgba(42,42,42,.12)}
-  .sec.md-dark + .sec, .sec + .sec.md-dark{border-top:0}
-  .sechead{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#5B5B5C;margin:0 0 var(--md-sp-6)}
-  .md-dark .sechead{color:#8E8E8E}
+  .sechead{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--md-coral);margin:0 0 var(--md-sp-6)}
   .grid{display:grid;gap:var(--md-sp-5)}
   .g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
+  .g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
   .swatch{padding:var(--md-sp-5);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px}
   .swatch b{font-size:1rem;font-weight:700}
   .swatch span{font-size:.82rem;opacity:.78;font-variant-numeric:tabular-nums}
   .panel{padding:var(--md-sp-6);position:relative;overflow:hidden}
   .row{display:flex;flex-wrap:wrap;gap:var(--md-sp-4);align-items:center}
-  .typerow{display:flex;align-items:baseline;gap:var(--md-sp-4);border-bottom:1px solid rgba(42,42,42,.12);padding:var(--md-sp-3) 0}
-  .typerow .meta{font-size:.72rem;color:#5B5B5C;white-space:nowrap;min-width:150px;letter-spacing:.06em}
-  .note{font-size:.9rem;line-height:1.55;color:#5B5B5C;max-width:64ch;margin:var(--md-sp-4) 0 0}
-  .note b{color:var(--md-on-light)}
-  .md-dark .note{color:#A9A9A9} .md-dark .note b{color:#fff}
-  .pieza{width:100%;display:block;border:1px solid rgba(42,42,42,.12)}
-  .pie{font-size:.8rem;color:#5B5B5C;margin:10px 0 0;line-height:1.5}
-  .pie b{color:var(--md-on-light)}
-  .md-dark .pie{color:#9A9A9A} .md-dark .pie b{color:#fff}
-  .abierto{border-left:0;border-top:2px solid var(--md-coral);padding-top:var(--md-sp-4);margin-top:var(--md-sp-6)}
+  .typerow{display:flex;align-items:baseline;gap:var(--md-sp-4);padding:var(--md-sp-3) 0;
+           border-bottom:1px solid color-mix(in srgb, var(--md-ink) 16%, transparent)}
+  .typerow .meta{font-size:.72rem;opacity:.6;white-space:nowrap;min-width:150px;letter-spacing:.06em}
+  .note{font-size:.95rem;line-height:1.55;max-width:66ch;margin:var(--md-sp-4) 0 0;opacity:.82}
+  .note b{opacity:1}
+  .pieza{width:100%;display:block;border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
+  .pie{font-size:.82rem;margin:10px 0 0;line-height:1.5;opacity:.7}
+  .pie b{opacity:1}
+  .fuera{padding:var(--md-sp-5);font-size:.95rem;line-height:1.5;
+         border:1px solid color-mix(in srgb, var(--md-ink) 18%, transparent)}
+  .fuera b{display:block;margin-bottom:6px}
+  .abierto{border-top:2px solid var(--md-coral);padding-top:var(--md-sp-4);margin-top:var(--md-sp-6)}
+  table.med{border-collapse:collapse;width:100%;max-width:660px;font-size:.9rem}
+  table.med th,table.med td{text-align:left;padding:10px 14px 10px 0;font-variant-numeric:tabular-nums;
+                            border-bottom:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
+  table.med th{font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
 
-  /* miniatura, con la geometría del canal */
-  .th{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size;border:1px solid rgba(42,42,42,.12)}
+  /* portada de la propuesta: claim a la izquierda, logo grande a la derecha */
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--md-sp-8);align-items:center;
+        padding:calc(var(--md-sp-8) * 1.4) var(--md-margin)}
+  .hero img{width:100%;max-width:620px;height:auto;justify-self:end}
+  @media (max-width:900px){ .hero{grid-template-columns:1fr;gap:var(--md-sp-6)} .hero img{justify-self:start;max-width:88%} }
+
+  .logobox{display:flex;align-items:center;justify-content:center;padding:var(--md-sp-8) var(--md-sp-6);min-height:220px;
+           border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
+  .logobox img{max-width:min(360px,80%);height:auto}
+  .isobox{display:flex;align-items:center;justify-content:center;padding:var(--md-sp-6);gap:var(--md-sp-6);
+          border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
+  .isobox img{height:64px;width:auto}
+  .isobox img.chico{height:32px}
+
+  /* fichas del filete */
+  .filete{padding:var(--md-sp-5);border:1px solid color-mix(in srgb, var(--md-ink) 18%, transparent);
+          display:flex;flex-direction:column;gap:var(--md-sp-4);min-height:190px;justify-content:space-between}
+  .filete .demo{display:flex;align-items:center;gap:16px;min-height:56px}
+  .filete .lbl{font-weight:700;font-size:.72rem;letter-spacing:.18em;text-transform:uppercase}
+  .filete .ln{height:2px;background:var(--md-coral);flex:1}
+  .filete .pista{height:2px;background:color-mix(in srgb, var(--md-ink) 35%, transparent);width:190px;position:relative}
+  .filete .pista i{position:absolute;left:0;top:0;height:100%;width:62px;background:var(--md-coral);display:block}
+  .filete .vert{border-left:6px solid var(--md-coral);padding-left:18px}
+  .filete .vert b{display:block;font-weight:900;font-size:1.4rem;line-height:1}
+  .filete .vert span{font-size:.85rem;color:var(--md-coral)}
+  .filete p{margin:0;font-size:.88rem;line-height:1.5;opacity:.78}
+
+  /* miniatura, con la geometria del canal */
+  .th{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size;
+      border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
   .th .flecha{position:absolute;left:-6.6%;top:-5.8%;width:54.7%;height:111.7%;z-index:1}
   .th .fig{position:absolute;left:-8.4%;top:5.1%;height:171.7%;z-index:3}
   .th .cita{position:absolute;right:8.1%;top:20.8%;width:62.5%;z-index:4;margin:0;
@@ -44,36 +76,59 @@
   .oscura{background:var(--md-surface-dark)} .clara{background:var(--md-surface-light)}
   .oscura .cita{color:#fff} .clara .cita{color:#2A2A2A}
   .oscura .flecha path{fill:var(--md-flecha-dark)} .clara .flecha path{fill:var(--md-flecha-light)}
-  /* tabla medida */
-  table.med{border-collapse:collapse;width:100%;max-width:620px;font-size:.9rem}
-  table.med th,table.med td{text-align:left;padding:10px 14px 10px 0;border-bottom:1px solid rgba(42,42,42,.12);font-variant-numeric:tabular-nums}
-  table.med th{font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:#5B5B5C}
-  .logobox{display:flex;align-items:center;justify-content:center;padding:var(--md-sp-8) var(--md-sp-6);min-height:220px}
-  .logobox img{max-width:min(360px,80%);height:auto}
-  .isobox{display:flex;align-items:center;justify-content:center;padding:var(--md-sp-6);gap:var(--md-sp-6)}
-  .isobox img{height:64px;width:auto}
-  .isobox img.chico{height:32px}
-  .fuera{padding:var(--md-sp-5);border:1px solid rgba(42,42,42,.16);font-size:.95rem;line-height:1.5}
-  .fuera b{display:block;margin-bottom:6px}
 </style>
 </head>
 <body>
 
-<header class="sec md-light">
-  <img src="assets/logo-negro-h.png" alt="Movimiento Desencadenado" style="height:56px">
-  <h1 class="md-claim" style="margin:var(--md-sp-6) 0 0;max-width:15ch">Propuesta de <span class="md-hl">marca</span></h1>
-  <p class="md-lead" style="max-width:60ch;margin-top:var(--md-sp-4)">Todo lo de esta página está medido sobre las piezas que ya publica el canal, o calculado. Sistema cerrado a 10 de septiembre: una sola versión de cada pieza.</p>
+<header class="hero md-dark">
+  <div>
+    <p class="md-label" style="color:var(--md-coral);margin:0 0 var(--md-sp-4)">Movimiento Desencadenado</p>
+    <h1 class="md-claim" style="margin:0;max-width:14ch">Propuesta de <span class="md-hl">marca</span></h1>
+    <p class="md-lead" style="max-width:52ch;margin-top:var(--md-sp-5);opacity:.88">Una evolución del sistema que ya usa el canal, no un cambio de marca. Todo lo que hay aquí está medido sobre las piezas publicadas, o calculado. Estado a 10 de septiembre.</p>
+  </div>
+  <img src="assets/logo-blanco-v.png" alt="Movimiento Desencadenado">
 </header>
 
 <section class="sec md-light">
+  <p class="sechead">La decisión que hay que tomar</p>
+  <h2 class="md-claim" style="font-size:var(--md-size-h1);margin:0 0 var(--md-sp-5);max-width:22ch">¿Manda la superficie <span class="md-hl">clara</span> o la <span class="md-hl">oscura</span>?</h2>
+  <p class="note" style="margin-top:0">El sistema funciona entero en las dos y no cambia nada más: mismo acento, mismo logo, misma tipografía, mismo gesto. Lo que cambia es cuál abre y cuál acompaña. <b>Aquí está cada una en la misma pieza</b>, la miniatura de YouTube, que es donde más se juega.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div>
+      <div class="th clara">
+        <svg class="flecha" viewBox="90.808594 52.21875 72.894531 97.390625" preserveAspectRatio="none"><path d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z" fill-rule="nonzero"/></svg>
+        <p class="ep">episodio 63</p>
+        <img class="fig" src="assets/ponente-color.png" alt="">
+        <p class="cita">"Salí del dolor<br>crónico yo sola"</p>
+      </div>
+      <p class="pie"><b>Clara.</b> Con el invitado a color, la persona es lo único con color en la pieza. Es más de papel, más silenciosa, y en la parrilla oscura de YouTube destaca sola.</p>
+    </div>
+    <div>
+      <div class="th oscura">
+        <svg class="flecha" viewBox="90.808594 52.21875 72.894531 97.390625" preserveAspectRatio="none"><path d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z" fill-rule="nonzero"/></svg>
+        <p class="ep">episodio 63</p>
+        <img class="fig" src="assets/ponente-color.png" alt="">
+        <p class="cita">"Salí del dolor<br>crónico yo sola"</p>
+      </div>
+      <p class="pie"><b>Oscura.</b> Es la continuidad con los 60 y pico episodios ya publicados, el acento salta más y la pieza pesa más en pantalla. La piel del invitado compite con el fondo.</p>
+    </div>
+  </div>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div class="fuera"><b>Lo que dice el número</b>Sobre la parrilla blanca de YouTube, la clara tiene 1,22 de silueta y necesita que la flecha sangre por el borde para recortarse. La oscura se recorta sola. Sobre la parrilla oscura pasa justo lo contrario.</div>
+    <div class="fuera"><b>La recomendación</b>La clara, por lo que hace con las personas: si el invitado va a color, el fondo neutro lo deja como único color de la pieza. Pero es una decisión de marca, no técnica, y la última palabra es de Juan.</div>
+  </div>
+  <p class="note"><b>Elijas la que elijas, la otra no se tira</b>: la que no mande es la superficie alterna y da el ritmo, tarjeta a tarjeta en el carrusel y sección a sección en la web.</p>
+</section>
+
+<section class="sec md-dark">
   <p class="sechead">Lo que cambia respecto a lo que hay hoy</p>
-  <div class="grid g2">
-    <div class="fuera"><b>La superficie principal es la clara.</b> Con el invitado a color, un fondo neutro deja a la persona como único color de la pieza. La oscura sigue viva como alterna, para dar ritmo.</div>
-    <div class="fuera"><b>El invitado va a color.</b> Son los protagonistas. El blanco y negro queda para material de archivo.</div>
-    <div class="fuera"><b>Un solo acento: #E8503C.</b> El mismo en las dos superficies. Antes hacían falta dos rojos distintos porque ninguno pasaba en las dos.</div>
-    <div class="fuera"><b>El logo va en una tinta.</b> Blanco sobre la oscura, negro sobre la clara. El púrpura sale del sistema entero.</div>
-    <div class="fuera"><b>El gesto de fondo es la flecha del isotipo.</b> Monocroma, tono sobre tono. Antes eran bandas diagonales en coral.</div>
-    <div class="fuera"><b>Corte de temporada.</b> Los 60 y pico episodios publicados no se recolorean: el sistema nuevo empieza en la temporada 26/27.</div>
+  <div class="grid g3">
+    <div class="fuera"><b>El invitado va a color.</b>Son los protagonistas. El blanco y negro queda para material de archivo.</div>
+    <div class="fuera"><b>Un solo acento: #E8503C.</b>El mismo en las dos superficies. Antes hacían falta dos rojos distintos porque ninguno pasaba en las dos.</div>
+    <div class="fuera"><b>El logo va en una tinta.</b>Blanco sobre la oscura, negro sobre la clara. El púrpura sale del sistema entero.</div>
+    <div class="fuera"><b>El gesto de fondo es la flecha del isotipo.</b>Monocroma, tono sobre tono. Antes eran bandas diagonales en coral.</div>
+    <div class="fuera"><b>El filete es un sistema, no un adorno.</b>La misma línea mide el avance en el carrusel, en las placas de vídeo y en la web.</div>
+    <div class="fuera"><b>Corte de temporada.</b>Los 60 y pico episodios publicados no se recolorean: lo nuevo empieza en la temporada 26/27.</div>
   </div>
 </section>
 
@@ -81,11 +136,11 @@
   <p class="sechead">El logo</p>
   <div class="grid g2">
     <div>
-      <div class="logobox md-light" style="border:1px solid rgba(42,42,42,.12)"><img src="assets/logo-negro-h.png" alt="Movimiento Desencadenado en negro"></div>
+      <div class="logobox md-light"><img src="assets/logo-negro-h.png" alt="Movimiento Desencadenado en negro"></div>
       <p class="pie"><b>Negro sobre la superficie clara.</b></p>
     </div>
     <div>
-      <div class="logobox md-dark"><img src="assets/logo-blanco-h.png" alt="Movimiento Desencadenado en blanco"></div>
+      <div class="logobox md-dark" style="border:0"><img src="assets/logo-blanco-h.png" alt="Movimiento Desencadenado en blanco"></div>
       <p class="pie"><b>Blanco sobre la superficie oscura.</b></p>
     </div>
   </div>
@@ -97,33 +152,33 @@
     <tr><td>Oscura (arriba)</td><td>4,80</td><td>1,79</td><td><b>1,79</b></td></tr>
     <tr><td>Oscura (abajo)</td><td>5,76</td><td>2,15</td><td><b>2,15</b></td></tr>
   </table>
-  <p class="note">El mínimo para que una forma se lea es 3:1. En la práctica el logo ya iba en una tinta en todo lo que existe hoy (cabecera de YouTube, perfil de Instagram, cabecera de cualquier página): esto solo lo escribe. <b>Consecuencia:</b> el púrpura deja de vivir dentro del logo y sale del sistema; el logo bicolor pasa a archivo histórico.</p>
-  <div class="isobox md-light" style="border:1px solid rgba(42,42,42,.12);margin-top:var(--md-sp-6)">
+  <p class="note">El mínimo para que una forma se lea es 3:1. En la práctica el logo ya iba en una tinta en todo lo que existe hoy (cabecera de YouTube, perfil de Instagram, entradilla de vídeo): esto solo lo escribe. <b>Consecuencia:</b> el púrpura deja de vivir dentro del logo y sale del sistema; el logo bicolor pasa a archivo histórico.</p>
+  <div class="isobox md-light" style="margin-top:var(--md-sp-6)">
     <img src="assets/iso-negro.png" alt="Isotipo"><img class="chico" src="assets/iso-negro.png" alt="Isotipo a 32 px">
   </div>
-  <p class="pie"><b>Donde no cabe el logotipo con palabras</b> (avatar, favicon, marcas de 32 px) va solo el isotipo. A ese tamaño, "Movimiento Desencadenado" seria una mancha.</p>
+  <p class="pie"><b>Donde no cabe el logotipo con palabras</b> (avatar, favicon, marcas de 32 px) va solo el isotipo. A ese tamaño, "Movimiento Desencadenado" sería una mancha.</p>
 </section>
 
-<section class="sec md-light">
+<section class="sec md-dark">
   <p class="sechead">Superficies</p>
   <div class="grid g2">
-    <div class="panel md-light" style="min-height:250px;border:1px solid rgba(42,42,42,.12)">
-      <p class="md-label" style="color:var(--md-coral)">Clara &middot; principal</p>
-      <p class="md-body" style="margin:var(--md-sp-3) 0 0">Plana. Es la que manda: con el invitado a color, la persona es lo único con color en la pieza.</p>
-      <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);color:#5B5B5C">#E9E9E7</p>
+    <div class="panel md-light" style="min-height:250px">
+      <p class="md-label" style="color:var(--md-coral)">Clara</p>
+      <p class="md-body" style="margin:var(--md-sp-3) 0 0">Plana, sin degradado.</p>
+      <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);opacity:.6">#E9E9E7</p>
     </div>
-    <div class="panel md-dark" style="min-height:250px">
-      <p class="md-label" style="color:var(--md-coral)">Oscura &middot; alterna</p>
+    <div class="panel" style="min-height:250px;background:var(--md-surface-dark);border:1px solid color-mix(in srgb,#fff 16%,transparent)">
+      <p class="md-label" style="color:var(--md-coral)">Oscura</p>
       <p class="md-body" style="opacity:.86;margin:var(--md-sp-3) 0 0">Degradado vertical: el azul vive en el tercio de arriba y muere antes de la mitad. Es lo que la separa de un negro cualquiera.</p>
-      <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);color:#8E8E8E">#252D39 &rarr; #232426 &rarr; #1E1E1E</p>
+      <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);opacity:.6">#252D39 → #232426 → #1E1E1E</p>
     </div>
   </div>
-  <p class="note">Alternan para dar ritmo (clara, oscura, clara): en carrusel slide a slide, en web sección a sección. Nunca dentro de la misma pieza.</p>
+  <p class="note">Alternan para dar ritmo: en carrusel slide a slide, en web sección a sección. Nunca dentro de la misma pieza.</p>
 </section>
 
 <section class="sec md-light">
   <p class="sechead">Acento</p>
-  <div class="swatch" style="background:#E8503C;color:#1E1E1E;max-width:620px"><span>3,06 sobre la clara &middot; 4,48 sobre la oscura</span><b>Coral #E8503C</b><span>el único acento, en las dos superficies</span></div>
+  <div class="swatch" style="background:#E8503C;color:#1E1E1E;max-width:660px"><span>3,06 sobre la clara · 4,48 sobre la oscura</span><b>Coral #E8503C</b><span>el único acento, en las dos superficies</span></div>
   <p class="note" style="margin-top:var(--md-sp-5)"><b>Uno, no dos.</b> El sistema anterior necesitaba un coral para el fondo oscuro y otro más profundo para el claro, porque el vivo sobre claro se quedaba en 2,38. Este pasa en las dos con un solo valor, y por eso puede ser <b>el</b> acento y no dos según el soporte. El púrpura queda fuera: 2,15 sobre la oscura.</p>
   <table class="med" style="margin-top:var(--md-sp-5)">
     <tr><th>Pieza</th><th>Acento</th><th>Púrpura</th></tr>
@@ -132,52 +187,81 @@
     <tr><td>Portada de episodio, sistema viejo</td><td>3,8 %</td><td>1,8 %</td></tr>
     <tr><td>Miniatura de YouTube, sistema viejo</td><td>9,8 %</td><td>10,4 %</td></tr>
   </table>
-  <p class="note"><b>La ración:</b> el acento nunca pasa del 10 % del area pintada, y en la práctica se queda muy por debajo. Marca una palabra del claim, el rótulo, la barra y el rol. Lo que el sistema retira no es coral: es púrpura de superficie.</p>
+  <p class="note"><b>La ración:</b> el acento nunca pasa del 10 % del área pintada, y en la práctica se queda muy por debajo. Marca una palabra del claim, el rótulo, el filete y el rol. Lo que el sistema retira no es coral: es púrpura de superficie.</p>
 </section>
 
-<section class="sec md-light">
-  <p class="sechead">Tipografía &middot; Axiforma</p>
-  <div class="typerow"><span class="meta">Claim &middot; 900 &middot; 1.00</span><span class="md-claim">No está fuera. <span class="md-hl">Está dentro.</span></span></div>
-  <div class="typerow"><span class="meta">Nombre &middot; 700</span><span style="font-weight:700;font-size:var(--md-size-h3)">Juan Nieto</span></div>
-  <div class="typerow"><span class="meta">Cuerpo &middot; 400 &middot; 1.42</span><span class="md-body" style="max-width:56ch">Controlar la mente con la mente es muy complicado. El cuerpo es la constante.</span></div>
-  <div class="typerow"><span class="meta">Rótulo &middot; 700 &middot; 0.18em</span><span class="md-label" style="color:var(--md-coral)">La idea</span></div>
+<section class="sec md-dark">
+  <p class="sechead">Tipografía · Axiforma</p>
+  <div class="typerow"><span class="meta">Claim · 900 · 1.00</span><span class="md-claim">No está fuera. <span class="md-hl">Está dentro.</span></span></div>
+  <div class="typerow"><span class="meta">Nombre · 700</span><span style="font-weight:700;font-size:var(--md-size-h3)">Juan Nieto</span></div>
+  <div class="typerow"><span class="meta">Cuerpo · 400 · 1.42</span><span class="md-body" style="max-width:56ch">Controlar la mente con la mente es muy complicado. El cuerpo es la constante.</span></div>
+  <div class="typerow"><span class="meta">Rótulo · 700 · 0.18em</span><span class="md-label" style="color:var(--md-coral)">La idea</span></div>
   <p class="note">Caja mixta en titulares: las mayúsculas son lenguaje Polestar.</p>
 </section>
 
 <section class="sec md-light">
-  <p class="sechead">La tarjeta de cita &middot; la pieza que define la marca</p>
-  <div class="grid g2">
-    <div><img class="pieza" src="assets/cita-clara.png" alt="Tarjeta de cita sobre superficie clara"><p class="pie"><b>Clara.</b> La principal: abre el carrusel.</p></div>
-    <div><img class="pieza" src="assets/cita-oscura.png" alt="Tarjeta de cita sobre superficie oscura"><p class="pie"><b>Oscura.</b> Alterna, para dar ritmo al deslizar.</p></div>
-  </div>
-  <p class="note">Renderizada con el sistema cerrado: acento único, invitado a color, logo en una tinta, isotipo tono sobre tono detrás. <b>La foto es un placeholder</b> hasta tener los recortes reales de cada invitado. Claim en Axiforma Black a 84 px con el remate en acento, contexto en Book a 31 px, atribución abajo a la izquierda y barra de progreso arriba a la derecha. Márgenes de 90 px.</p>
-</section>
-
-<section class="sec md-light">
-  <p class="sechead">Miniatura de YouTube</p>
-  <div style="max-width:760px">
-    <div class="th clara">
-      <svg class="flecha" viewBox="90.808594 52.21875 72.894531 97.390625" preserveAspectRatio="none"><path d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z" fill-rule="nonzero"/></svg>
-      <p class="ep">episodio 63</p>
-      <img class="fig" src="assets/ponente-color.png" alt="">
-      <p class="cita">"Salí del dolor<br>crónico yo sola"</p>
+  <p class="sechead">El filete · la línea que mide el avance</p>
+  <h2 class="md-claim" style="font-size:var(--md-size-h1);margin:0 0 var(--md-sp-5);max-width:24ch">Una sola línea, <span class="md-hl">el mismo trabajo</span> en todo el pack</h2>
+  <p class="note" style="margin-top:0">Ya estaba en dos sitios sin que nadie lo hubiera escrito: la barra de navegación del carrusel y el filete que sale del rótulo en las placas de vídeo. Es el mismo elemento haciendo lo mismo, <b>decir por dónde vas</b>. Al declararlo componente, entra en el resto del pack sin inventar nada.</p>
+  <div class="grid g3" style="margin-top:var(--md-sp-6)">
+    <div class="filete">
+      <div class="demo"><span class="pista"><i></i></span></div>
+      <p><b>Carrusel.</b> 190 × 2 px arriba a la derecha, pista al 40 % y tramo activo en acento. Dice en qué tarjeta vas.</p>
+    </div>
+    <div class="filete">
+      <div class="demo"><span class="lbl">Gracias por tu tiempo</span><span class="ln"></span></div>
+      <p><b>Placas de vídeo.</b> El filete arranca donde acaba el rótulo y muere antes del margen. Medido en la placa del canal: 3 px de grosor, de x 624 a 1655 sobre 1920.</p>
+    </div>
+    <div class="filete">
+      <div class="demo"><span class="vert"><b>Juan Nieto</b><span>MD #41</span></span></div>
+      <p><b>Rótulo de vídeo.</b> El mismo filete, girado: barra vertical en acento a la izquierda del nombre.</p>
     </div>
   </div>
-  <p class="note">Mismo formato que el del canal, medido sobre el episodio 63: la cita <b>siempre en dos líneas</b> alíneada a la derecha y con el tamaño ajustado para rozar el margen; el número de episodio en contorno, al ras del borde inferior y <b>por encima del invitado</b>; la flecha con la base a la altura completa y la punta hacia el centro. Las comillas son de marca: dos barras al ángulo de la flecha. Se juzga a 230 px sobre la parrilla, no en grande: la flecha sangrando por el borde es lo que le da silueta contra el blanco de YouTube.</p>
+  <p class="note"><b>Grosor:</b> 2 px por cada 1080 px de ancho de la pieza, redondeado a entero, mínimo 2. Así pesa lo mismo en un carrusel que en una placa de 1920 o en una web. Y una regla que lo mantiene limpio: <b>un solo filete por pieza</b>, y siempre horizontal salvo en el rótulo de vídeo.</p>
+</section>
+
+<section class="sec md-dark">
+  <p class="sechead">La tarjeta de cita · la pieza que define la marca</p>
+  <div class="grid g2">
+    <div><img class="pieza" src="assets/cita-clara.png" alt="Tarjeta de cita sobre superficie clara"><p class="pie"><b>Clara.</b></p></div>
+    <div><img class="pieza" src="assets/cita-oscura.png" alt="Tarjeta de cita sobre superficie oscura"><p class="pie"><b>Oscura.</b> Alternan para dar ritmo al deslizar.</p></div>
+  </div>
+  <p class="note">Acento único, invitado a color, logo en una tinta, isotipo tono sobre tono detrás. <b>La foto es un placeholder</b> hasta tener los recortes reales de cada invitado. Claim en Axiforma Black a 84 px con el remate en acento, contexto en Book a 31 px, atribución abajo a la izquierda y filete de navegación arriba a la derecha. Márgenes de 90 px.</p>
 </section>
 
 <section class="sec md-light">
-  <p class="sechead">Cabeceras</p>
+  <p class="sechead">Vídeo · entradilla, cierre y careta</p>
+  <p class="note" style="margin-top:0">Las placas que usa el canal hoy ya tienen la estructura buena: rótulo, filete, titular en dos líneas, plataformas. Lo que sobra es el color. <b>Debajo, la misma geometría medida y repintada con el sistema</b>: fuera los glows morados y rosas, el filete en el acento y la flecha en el tercio derecho para no cruzar el texto.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div><img class="pieza" src="assets/antes-placa.png" alt="Entradilla actual"><p class="pie"><b>Hoy.</b> Píldora blanca con texto púrpura y dos glows de color detrás.</p></div>
+    <div><img class="pieza" src="export/MD-placa-placa-oscura.png" alt="Entradilla 2.0"><p class="pie"><b>Repintada.</b> Mismo sitio para todo: rótulo a 108 px del borde, filete a la altura del rótulo, titular a 119 px y las plataformas abajo.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div><img class="pieza" src="assets/antes-outro.png" alt="Cierre actual"><p class="pie"><b>Cierre, hoy.</b></p></div>
+    <div><img class="pieza" src="export/MD-placa-outro-clara.png" alt="Cierre 2.0"><p class="pie"><b>Cierre repintado</b>, aquí en la superficie clara para ver las dos.</p></div>
+  </div>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div><img class="pieza" src="assets/antes-intro.png" alt="Careta actual"><p class="pie"><b>Careta, hoy.</b> Degradado morado y logo a color.</p></div>
+    <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido (856 px de ancho, centrado) y debajo el filete: en movimiento crece de izquierda a derecha, que es el gesto de la marca.</p></div>
+  </div>
+  <p class="note">Los botones de plataforma son el <b>botón secundario del sistema</b>: filete, radio 0, la tinta de la superficie. Sustituyen a los badges de tienda, que traían su propio color y rompían la paleta.</p>
+</section>
+
+<section class="sec md-dark">
+  <p class="sechead">Cabeceras y perfil</p>
   <img class="pieza" src="export/MD-youtube-cabecera-clara.png" alt="Cabecera de YouTube">
-  <p class="pie"><b>YouTube &middot; 2560 &times; 1440.</b> El logotipo va a 1200 &times; 400, centrado dentro de la franja segura de 1546 &times; 423, que es lo único que se ve en móvil y escritorio. Por encima de ese tamaño se corta en móvil.</p>
-  <div style="max-width:340px;margin-top:var(--md-sp-6)"><img class="pieza" src="export/MD-instagram-perfil-clara.png" alt="Perfil de Instagram" style="border-radius:50%"></div>
-  <p class="pie"><b>Instagram &middot; perfil.</b> Solo el isotipo, al 89 % del diámetro, sobre fondo limpio sin flecha.</p>
+  <p class="pie"><b>YouTube · 2560 × 1440.</b> El logotipo va a 1200 × 400, centrado dentro de la franja segura de 1546 × 423, que es lo único que se ve en móvil y escritorio. Por encima de ese tamaño se corta en móvil.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div><img class="pieza" src="export/MD-instagram-perfil-clara.png" alt="Perfil de Instagram" style="border-radius:50%"></div>
+    <div><img class="pieza" src="export/MD-instagram-perfil-oscura.png" alt="Perfil de Instagram" style="border-radius:50%"></div>
+  </div>
+  <p class="pie"><b>Instagram · perfil.</b> Solo el isotipo, al 89 % del diámetro, sobre fondo limpio sin flecha.</p>
 </section>
 
 <section class="sec md-light">
   <p class="sechead">CTAs</p>
   <div class="grid g2">
-    <div class="panel md-light" style="border:1px solid rgba(42,42,42,.12)"><div class="row">
+    <div class="panel md-light" style="border:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)"><div class="row">
       <a class="md-btn md-btn--primary" href="#">Escuchar el episodio</a>
       <a class="md-btn md-btn--ghost" href="#">Ver todos</a>
       <a class="md-link" href="#">Leer la transcripción</a>
@@ -194,18 +278,43 @@
 <section class="sec md-dark">
   <p class="sechead">Lo que se jubila</p>
   <div class="grid g2">
-    <div class="fuera" style="border-color:rgba(255,255,255,.16)"><b>El púrpura, en cualquier uso.</b> También dentro del logo: la píldora de "Episodio NN" y el degradado de las miniaturas, que llegaba al 10,4 % del area.</div>
-    <div class="fuera" style="border-color:rgba(255,255,255,.16)"><b>Los dos corales.</b> #F36F62 y #BE3A2B, y el #CC1F0F que se probó antes: tiraba a granate.</div>
-    <div class="fuera" style="border-color:rgba(255,255,255,.16)"><b>La banda diagonal.</b> La sustituye la flecha del isotipo, monocroma.</div>
-    <div class="fuera" style="border-color:rgba(255,255,255,.16)"><b>El invitado en blanco y negro.</b> Y el logo a color, que pasa a archivo histórico.</div>
+    <div>
+      <img class="pieza" src="assets/antes-portada.png" alt="Portada de episodio del sistema viejo" style="max-width:300px">
+      <p class="pie">La portada de episodio de hoy reúne casi todo lo que sale: píldora púrpura, invitado en blanco y negro, banda diagonal y dos acentos compitiendo.</p>
+    </div>
+    <div class="grid" style="gap:var(--md-sp-4);align-content:start">
+      <div class="fuera"><b>El púrpura, en cualquier uso.</b>También dentro del logo: la píldora de "Episodio NN" y el degradado de las miniaturas, que llegaba al 10,4 % del área.</div>
+      <div class="fuera"><b>Los dos corales.</b>#F36F62 y #BE3A2B, y el #CC1F0F que se probó antes: tiraba a granate.</div>
+      <div class="fuera"><b>La banda diagonal.</b>La sustituye la flecha del isotipo, monocroma y confinada a un lado.</div>
+      <div class="fuera"><b>El invitado en blanco y negro.</b>Y el logo a color, que pasa a archivo histórico.</div>
+    </div>
   </div>
 </section>
 
-<footer class="sec md-light">
+<section class="sec md-light">
+  <p class="sechead">El mapa · qué está resuelto y qué falta</p>
+  <table class="med" style="max-width:100%">
+    <tr><th>Pieza</th><th>Estado</th><th>Nota</th></tr>
+    <tr><td>Logo y sus versiones</td><td><b>Resuelto</b></td><td>Una tinta, con área de uso por tamaño</td></tr>
+    <tr><td>Superficies, acento y tipografía</td><td><b>Resuelto</b></td><td>Falta elegir cuál manda</td></tr>
+    <tr><td>El filete y la flecha</td><td><b>Resuelto</b></td><td>Los dos únicos gestos del sistema</td></tr>
+    <tr><td>Tarjeta de cita (carrusel)</td><td><b>Resuelto</b></td><td>Con foto placeholder</td></tr>
+    <tr><td>Miniatura de YouTube</td><td><b>Resuelto</b></td><td>Clonada del episodio 63</td></tr>
+    <tr><td>Cabeceras y perfiles</td><td><b>Resuelto</b></td><td>YouTube e Instagram exportados</td></tr>
+    <tr><td>Placas de vídeo (careta, entradilla, cierre)</td><td><b>Propuesto</b></td><td>Geometría clonada; falta animarlas</td></tr>
+    <tr><td>Portada de episodio (feed 9:16 y 4:5)</td><td>Falta</td><td>Es la pieza más publicada después de la miniatura</td></tr>
+    <tr><td>Rótulo de nombre en vídeo</td><td>Falta</td><td>El componente existe, falta la plantilla a 1920</td></tr>
+    <tr><td>Web</td><td>Falta</td><td>El prototipo va con los tokens de julio</td></tr>
+    <tr><td>Presentación y documento de marca</td><td>Falta</td><td>Esta página es el borrador</td></tr>
+  </table>
+  <p class="note">Nada de lo que falta cambia el sistema: son plantillas nuevas hechas con las mismas piezas.</p>
+</section>
+
+<footer class="sec md-dark">
   <p class="md-label" style="color:var(--md-coral)">Lo que queda pendiente</p>
   <div class="abierto">
-    <p class="md-body" style="margin:0 0 var(--md-sp-3)">Ninguno bloquea el sistema: <b>licencia de webfont de Axiforma</b> antes de publicar cualquier página, <b>unificar el handle</b> (el pack decia <i>@movimientodesencadenado</i> y las piezas pintan <i>@movimiento.desencadenado</i>) y sustituir la <b>foto placeholder</b> por los recortes reales a color de cada invitado.</p>
-    <p class="md-body" style="margin:0">Sobre la superficie clara, el acento da 3,06:1: vale para texto grande y para elementos gráficos, pero no para párrafos de cuerpo. Es la única restricción de uso que trae el acento único.</p>
+    <p class="md-body" style="margin:0 0 var(--md-sp-3)"><b>Una decisión</b>: clara u oscura como superficie principal. Lo demás son flecos que no bloquean: licencia de webfont de Axiforma antes de publicar cualquier página, unificar el handle (el pack decía <i>@movimientodesencadenado</i> y las piezas pintan <i>@movimiento.desencadenado</i>) y sustituir la foto placeholder por los recortes reales a color de cada invitado.</p>
+    <p class="md-body" style="margin:0;opacity:.86">Sobre la superficie clara, el acento da 3,06:1: vale para texto grande y para elementos gráficos, pero no para párrafos de cuerpo. Es la única restricción de uso que trae el acento único.</p>
   </div>
 </footer>
 
