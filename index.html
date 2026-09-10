@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Movimiento Desencadenado 2.0 · sistema</title>
+<title>Movimiento Desencadenado · propuesta de marca</title>
 <link rel="stylesheet" href="tokens.css">
 <style>
   *{box-sizing:border-box}
@@ -14,222 +14,160 @@
   .sechead{font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:#8E8E8E;margin:0 0 var(--md-sp-6)}
   .grid{display:grid;gap:var(--md-sp-5)}
   .g2{grid-template-columns:repeat(auto-fit,minmax(340px,1fr))}
-  .g3{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
   .swatch{padding:var(--md-sp-5);min-height:150px;display:flex;flex-direction:column;justify-content:flex-end;gap:4px}
   .swatch b{font-size:1rem;font-weight:700}
-  .swatch span{font-size:.82rem;opacity:.75;font-variant-numeric:tabular-nums}
-  .ratio{font-size:.78rem;font-weight:700;letter-spacing:.04em}
+  .swatch span{font-size:.82rem;opacity:.78;font-variant-numeric:tabular-nums}
   .panel{padding:var(--md-sp-6);position:relative;overflow:hidden}
   .row{display:flex;flex-wrap:wrap;gap:var(--md-sp-4);align-items:center}
-  .stack{display:flex;flex-direction:column;gap:var(--md-sp-4);align-items:flex-start}
   .typerow{display:flex;align-items:baseline;gap:var(--md-sp-4);border-bottom:1px solid rgba(255,255,255,.08);padding:var(--md-sp-3) 0}
-  .typerow .meta{font-size:.72rem;color:#8E8E8E;white-space:nowrap;min-width:140px;letter-spacing:.06em}
-  .note{font-size:.9rem;line-height:1.5;color:#A9A9A9;max-width:62ch;margin:var(--md-sp-4) 0 0}
+  .typerow .meta{font-size:.72rem;color:#8E8E8E;white-space:nowrap;min-width:150px;letter-spacing:.06em}
+  .note{font-size:.9rem;line-height:1.55;color:#A9A9A9;max-width:64ch;margin:var(--md-sp-4) 0 0}
   .note b{color:#fff}
-  .bad{color:#F36F62}
-  .quote-demo{aspect-ratio:4/5;max-width:420px;display:flex;flex-direction:column;justify-content:space-between;padding:var(--md-sp-6)}
-  .videoframe{aspect-ratio:16/9;background:#333 url('assets/iso.png') center/38% no-repeat;display:flex;align-items:flex-end;padding:var(--md-sp-5)}
+  .pieza{width:100%;display:block;border:1px solid rgba(255,255,255,.08)}
+  .pie{font-size:.8rem;color:#9A9A9A;margin:10px 0 0;line-height:1.5}
+  .pie b{color:#fff}
+  .abierto{border-left:0;border-top:2px solid var(--md-coral);padding-top:var(--md-sp-4);margin-top:var(--md-sp-6)}
+
+  /* miniatura, con la geometría del canal */
+  .th{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size}
+  .th .flecha{position:absolute;left:-6.6%;top:-5.8%;width:54.7%;height:111.7%;z-index:1}
+  .th .fig{position:absolute;left:-8.4%;top:5.1%;height:171.7%;z-index:3}
+  .th .cita{position:absolute;right:8.1%;top:20.8%;width:62.5%;z-index:4;margin:0;
+            font-weight:900;font-size:8.6cqw;line-height:1.0;letter-spacing:-.035em;text-align:right}
+  .th .ep{position:absolute;left:0;right:.8%;bottom:-.6%;margin:0;white-space:nowrap;text-align:right;
+          z-index:6;font-weight:900;font-size:17.7cqw;line-height:.86;letter-spacing:-.02em;
+          color:transparent;-webkit-text-stroke:.13cqw var(--md-coral)}
+  .oscura{background:var(--md-surface-dark)} .clara{background:var(--md-surface-light)}
+  .oscura .cita{color:#fff} .clara .cita{color:#2A2A2A}
+  .oscura .flecha path{fill:var(--md-flecha-dark)} .clara .flecha path{fill:var(--md-flecha-light)}
 </style>
 </head>
 <body>
 
 <header class="sec md-dark">
-  <img src="assets/logo-blanco-h.png" alt="Movimiento Desencadenado" style="height:52px">
-  <h1 class="md-claim" style="margin:var(--md-sp-6) 0 0;max-width:14ch">Sistema de marca <span class="md-hl">2.0</span></h1>
-  <p class="md-lead" style="max-width:56ch;margin-top:var(--md-sp-4);opacity:.86">Todo lo de esta página está medido sobre el carrusel de referencia o calculado (contraste WCAG). Es la base para web, CTAs, vídeo y redes.</p>
+  <img src="assets/logo-blanco-h.png" alt="Movimiento Desencadenado" style="height:56px">
+  <h1 class="md-claim" style="margin:var(--md-sp-6) 0 0;max-width:15ch">Propuesta de <span class="md-hl">marca</span></h1>
+  <p class="md-lead" style="max-width:58ch;margin-top:var(--md-sp-4);opacity:.88">Todo lo de esta página está medido sobre las piezas que ya publica el canal, o calculado. Estado a 10 de septiembre.</p>
 </header>
 
-<!-- SUPERFICIES -->
+<section class="sec">
+  <p class="sechead">Lo que cambia respecto a lo que hay hoy</p>
+  <div class="grid g2">
+    <div class="panel md-dark"><p class="md-body" style="margin:0"><b>El invitado va a color.</b> Son los protagonistas. El blanco y negro queda para material de archivo.</p></div>
+    <div class="panel md-dark"><p class="md-body" style="margin:0"><b>Fuera el púrpura de las piezas.</b> Sobre la superficie oscura da 2,15:1: no es legible. Se queda dentro del logo.</p></div>
+    <div class="panel md-dark"><p class="md-body" style="margin:0"><b>Un solo acento coral</b> para las dos superficies, en vez de dos rojos distintos.</p></div>
+    <div class="panel md-dark"><p class="md-body" style="margin:0"><b>El gesto de fondo es la flecha del isotipo</b>, monocroma. Antes eran bandas diagonales en coral.</p></div>
+  </div>
+</section>
+
 <section class="sec">
   <p class="sechead">Superficies</p>
   <div class="grid g2">
-    <div class="panel md-dark" style="min-height:280px">
-      <p class="md-label" style="color:var(--md-coral)">Oscura · principal</p>
-      <p class="md-body" style="opacity:.85;margin:var(--md-sp-3) 0 0">Degradado vertical. El azul-morado vive solo en el tercio de arriba y muere antes de la mitad. Es lo que separa a MD de un fondo negro cualquiera.</p>
-      <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);color:#8E8E8E">#252D39 → #232426 (52 %) → #1E1E1E</p>
+    <div class="panel md-dark" style="min-height:250px">
+      <p class="md-label" style="color:var(--md-coral)">Oscura</p>
+      <p class="md-body" style="opacity:.86;margin:var(--md-sp-3) 0 0">Degradado vertical: el azul vive en el tercio de arriba y muere antes de la mitad. Es lo que la separa de un negro cualquiera.</p>
+      <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);color:#8E8E8E">#252D39 → #232426 → #1E1E1E</p>
     </div>
-    <div class="panel md-light" style="min-height:280px">
-      <p class="md-label" style="color:var(--md-coral-deep)">Clara · alterna</p>
-      <p class="md-body" style="margin:var(--md-sp-3) 0 0">Plana, sin degradado. Alterna con la oscura para dar ritmo: en carrusel slide a slide, en web sección a sección.</p>
+    <div class="panel md-light" style="min-height:250px">
+      <p class="md-label" style="color:var(--md-coral)">Clara</p>
+      <p class="md-body" style="margin:var(--md-sp-3) 0 0">Plana. Alterna con la oscura para dar ritmo.</p>
       <p class="md-body" style="font-variant-numeric:tabular-nums;margin-top:var(--md-sp-4);color:#5B5B5C">#E9E9E7</p>
     </div>
   </div>
 </section>
 
-<!-- COLOR -->
 <section class="sec">
-  <p class="sechead">Acento y contraste medido</p>
-  <div class="grid g3">
-    <div class="swatch" style="background:#F36F62;color:#1E1E1E">
-      <span class="ratio">5.76 · AA</span><b>Coral vivo #F36F62</b><span>acento sobre oscuro · relleno de botón con tinta oscura</span>
+  <p class="sechead">Acento</p>
+  <div class="grid g2">
+    <div class="swatch" style="background:#E8503C;color:#1E1E1E"><span>3,06 sobre la clara · 4,48 sobre la oscura</span><b>Coral #E8503C</b><span>el único acento, en las dos superficies</span></div>
+    <div class="swatch" style="background:#6E30AF;color:#fff"><span>2,15 sobre la oscura</span><b>Púrpura #6E30AF</b><span>solo dentro del logo</span></div>
+  </div>
+  <p class="note"><b>La ración:</b> entre el 3 y el 9 % del área pintada, nunca más del 10 %. Es la misma dosis que ya tienen vuestras piezas (3,8 % la portada de episodio, 9,8 % la miniatura); lo que se retira es el púrpura de superficie, que llegaba al 10,4 %.</p>
+</section>
+
+<section class="sec">
+  <p class="sechead">Tipografía · Axiforma</p>
+  <div class="typerow"><span class="meta">Claim · 900 · 1.00</span><span class="md-claim">No está fuera. <span class="md-hl">Está dentro.</span></span></div>
+  <div class="typerow"><span class="meta">Nombre · 700</span><span style="font-weight:700;font-size:var(--md-size-h3)">Juan Nieto</span></div>
+  <div class="typerow"><span class="meta">Cuerpo · 400 · 1.42</span><span class="md-body" style="max-width:56ch">Controlar la mente con la mente es muy complicado. El cuerpo es la constante.</span></div>
+  <div class="typerow"><span class="meta">Rótulo · 700 · 0.18em</span><span class="md-label" style="color:var(--md-coral)">La idea</span></div>
+  <p class="note">Caja mixta en titulares: las mayúsculas son lenguaje Polestar.</p>
+</section>
+
+<section class="sec">
+  <p class="sechead">Miniatura de YouTube</p>
+  <div class="grid g2">
+    <div>
+      <div class="th oscura">
+        <svg class="flecha" viewBox="90.808594 52.21875 72.894531 97.390625" preserveAspectRatio="none"><path d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z" fill-rule="nonzero"/></svg>
+        <p class="ep">episodio 63</p>
+        <img class="fig" src="assets/ponente-color.png" alt="">
+        <p class="cita">"Salí del dolor<br>crónico yo sola"</p>
+      </div>
+      <p class="pie"><b>Oscura.</b></p>
     </div>
-    <div class="swatch" style="background:#BE3A2B;color:#fff">
-      <span class="ratio">4.51 · AA</span><b>Coral profundo #BE3A2B</b><span>texto coral sobre superficie clara</span>
-    </div>
-    <div class="swatch" style="background:#6E30AF;color:#fff">
-      <span class="ratio">2.15 sobre oscuro</span><b>Púrpura #6E30AF</b><span>solo dentro del logo</span>
+    <div>
+      <div class="th clara">
+        <svg class="flecha" viewBox="90.808594 52.21875 72.894531 97.390625" preserveAspectRatio="none"><path d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z" fill-rule="nonzero"/></svg>
+        <p class="ep">episodio 63</p>
+        <img class="fig" src="assets/ponente-color.png" alt="">
+        <p class="cita">"Salí del dolor<br>crónico yo sola"</p>
+      </div>
+      <p class="pie"><b>Clara.</b></p>
     </div>
   </div>
-  <p class="note"><b>La regla que hay que recordar:</b> el coral vivo sobre la superficie clara da <span class="bad">2.38 y falla</span>, incluso a tamaño grande. Sobre claro se usa el coral profundo. Y un botón coral lleva tinta <b>oscura</b>: con blanco encima da <span class="bad">2.89</span>.</p>
+  <p class="note">Mismo formato que el del canal, medido: la cita <b>siempre en dos líneas</b> alineada a la derecha y con el tamaño ajustado para rozar el margen; el número de episodio en contorno, al ras del borde inferior y <b>por encima del invitado</b>; la flecha con la base a la altura completa y la punta hacia el centro. Las comillas son de marca: dos barras al ángulo de la flecha.</p>
 </section>
 
-<!-- TIPOGRAFIA -->
 <section class="sec">
-  <p class="sechead">Tipografía · Axiforma, dos pesos de trabajo</p>
-  <div class="typerow"><span class="meta">Claim · 900 · 1.00</span><span class="md-claim">No está fuera. <span class="md-hl" style="color:var(--md-coral)">Está dentro.</span></span></div>
-  <div class="typerow"><span class="meta">Titular · 900</span><span style="font-weight:900;font-size:var(--md-size-h2)">Titular de sección</span></div>
-  <div class="typerow"><span class="meta">Nombre · 700</span><span style="font-weight:700;font-size:var(--md-size-h3)">Juan Nieto</span></div>
-  <div class="typerow"><span class="meta">Cuerpo · 400 · 1.42</span><span class="md-body" style="max-width:56ch">Controlar la mente con la mente es muy complicado. El cuerpo es la constante: entra por ahí.</span></div>
-  <div class="typerow"><span class="meta">Rótulo · 700 · 0.18em</span><span class="md-label" style="color:var(--md-coral)">La idea</span></div>
-  <p class="note">Caja mixta siempre en titulares: las mayúsculas son lenguaje Polestar. Solo los micro-rótulos van en versal con tracking.</p>
+  <p class="sechead">Cabeceras</p>
+  <img class="pieza" src="export/MD-youtube-cabecera-oscura.png" alt="Cabecera de YouTube">
+  <p class="pie"><b>YouTube · 2560 × 1440.</b> El logotipo va a 1200 × 400, centrado dentro de la franja segura de 1546 × 423, que es lo único que se ve en móvil y escritorio. En una sola tinta: a color, ninguna de las dos mitades del logo llega a contraste sobre ninguna superficie.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div><img class="pieza" src="export/MD-instagram-perfil-oscura.png" alt="Perfil de Instagram" style="border-radius:50%"></div>
+    <div><img class="pieza" src="export/MD-instagram-perfil-clara.png" alt="Perfil de Instagram" style="border-radius:50%"></div>
+  </div>
+  <p class="pie"><b>Instagram · perfil.</b> Solo el isotipo, al 89 % del diámetro, sobre fondo limpio. El logotipo con palabras no entra: a 32 px en una lista de comentarios sería una mancha.</p>
 </section>
 
-<!-- CTA -->
 <section class="sec">
   <p class="sechead">CTAs</p>
   <div class="grid g2">
-    <div class="panel md-dark">
-      <p class="md-label" style="color:var(--md-coral);margin:0 0 var(--md-sp-5)">Sobre oscuro</p>
-      <div class="row">
-        <a class="md-btn md-btn--primary" href="#">Escuchar el episodio</a>
-        <a class="md-btn md-btn--ghost" href="#">Ver todos</a>
-        <a class="md-link" href="#">Leer la transcripción</a>
-      </div>
-    </div>
-    <div class="panel md-light">
-      <p class="md-label" style="color:var(--md-coral-deep);margin:0 0 var(--md-sp-5)">Sobre claro</p>
-      <div class="row">
-        <a class="md-btn md-btn--primary" href="#">Escuchar el episodio</a>
-        <a class="md-btn md-btn--ghost" href="#">Ver todos</a>
-        <a class="md-link" href="#">Leer la transcripción</a>
-      </div>
-    </div>
+    <div class="panel md-dark"><div class="row">
+      <a class="md-btn md-btn--primary" href="#">Escuchar el episodio</a>
+      <a class="md-btn md-btn--ghost" href="#">Ver todos</a>
+      <a class="md-link" href="#">Leer la transcripción</a>
+    </div></div>
+    <div class="panel md-light"><div class="row">
+      <a class="md-btn md-btn--primary" href="#">Escuchar el episodio</a>
+      <a class="md-btn md-btn--ghost" href="#">Ver todos</a>
+      <a class="md-link" href="#">Leer la transcripción</a>
+    </div></div>
   </div>
-  <p class="note">Un solo primario por pantalla. Sin esquinas redondeadas: el isotipo es todo aristas y el sistema lo sigue.</p>
-</section>
-
-<!-- COMPONENTES -->
-<section class="sec">
-  <p class="sechead">Componentes</p>
-  <div class="grid g2">
-    <div class="panel md-dark">
-      <p class="md-label" style="color:#8E8E8E;margin:0 0 var(--md-sp-5)">Marca de episodio · sustituye a la píldora púrpura</p>
-      <div class="stack">
-        <span class="md-episode">Episodio 58</span>
-        <div class="md-progress" style="margin-top:var(--md-sp-3)"><i style="width:38%"></i></div>
-      </div>
-    </div>
-    <div class="panel md-dark">
-      <p class="md-label" style="color:#8E8E8E;margin:0 0 var(--md-sp-5)">Lower-third de vídeo</p>
-      <div class="videoframe">
-        <div class="md-lower"><span class="n">Jorge Crecis</span><span class="r">Episodio 41</span></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid g2" style="margin-top:var(--md-sp-5)">
-    <div class="md-card">
-      <span class="md-episode">Episodio 41</span>
-      <h3 style="font-weight:900;font-size:var(--md-size-h3);margin:0;line-height:1.05">El cuerpo es tu casa</h3>
-      <p class="md-body" style="margin:0;color:var(--md-on-light-muted)">Con Jorge Crecis. Por qué entrar por el cuerpo es más fácil que entrar por la cabeza.</p>
-      <a class="md-link" href="#" style="align-self:flex-start;margin-top:var(--md-sp-2)">Escuchar</a>
-    </div>
-    <div class="md-card md-card--dark md-dark">
-      <span class="md-episode">Episodio 46</span>
-      <h3 style="font-weight:900;font-size:var(--md-size-h3);margin:0;line-height:1.05">Poder moverte es un milagro</h3>
-      <p class="md-body" style="margin:0;color:var(--md-on-dark-muted)">Con Rober Sánchez. La misma tarjeta en superficie oscura: alternan, no conviven.</p>
-      <a class="md-link" href="#" style="align-self:flex-start;margin-top:var(--md-sp-2)">Escuchar</a>
-    </div>
-  </div>
-</section>
-
-<!-- CITA -->
-<section class="sec">
-  <p class="sechead">La cita · el componente que define la marca</p>
-  <div class="grid g2">
-    <div class="quote-demo md-dark md-quote">
-      <div>
-        <span class="md-label" style="color:var(--md-coral)">La idea</span>
-        <p class="md-claim" style="margin:var(--md-sp-4) 0 0;font-size:2.4rem">No está fuera.<br><span class="md-hl">Está dentro.</span></p>
-      </div>
-      <div class="md-quote__attr"><div class="n">Juan Nieto</div><div class="e">En su charla con Christi Idavoy · MD #25</div></div>
-    </div>
-    <div class="quote-demo md-light md-quote">
-      <div>
-        <span class="md-label" style="color:var(--md-coral-deep)">La idea</span>
-        <p class="md-claim" style="margin:var(--md-sp-4) 0 0;font-size:2.4rem">El cuerpo<br><span class="md-hl">es tu casa.</span></p>
-      </div>
-      <div class="md-quote__attr"><div class="n">Juan Nieto</div><div class="e">En su charla con Jorge Crecis · MD #41</div></div>
-    </div>
-  </div>
-  <p class="note">A tamaño real la tarjeta lleva además la foto del ponente en B/N a sangre por la derecha (900 px de 1350) y el isotipo tono sobre tono detrás.</p>
-</section>
-
-
-<!-- DIAGONAL -->
-<section class="sec">
-  <p class="sechead">La diagonal · el único gesto gráfico</p>
-  <div class="panel md-dark" style="min-height:340px;display:flex;align-items:flex-end">
-    <div class="md-diagonal md-diagonal--right"></div>
-    <img class="md-figure" src="assets/ponente-placeholder.png" alt="" style="position:absolute;right:0;bottom:0;height:100%;z-index:1">
-    <div style="position:relative;z-index:2;max-width:22ch">
-      <span class="md-episode">Episodio 63</span>
-      <p class="md-claim" style="font-size:2.6rem;margin:var(--md-sp-4) 0 0">Salí del dolor crónico <span class="md-hl">yo sola</span></p>
-    </div>
-  </div>
-  <p class="note">Viene de las portadas de episodio que ya existen y nace de las aristas del isotipo. Reglas: <b>una sola</b> por pieza, siempre <b>detrás</b> de la figura, nunca cruzando texto, y en coral vivo solo sobre superficie oscura. Es el puente entre el sistema viejo y este.</p>
-</section>
-
-<!-- APLICACIONES -->
-<section class="sec">
-  <p class="sechead">Aplicaciones</p>
-
-  <div class="panel md-dark" style="display:grid;grid-template-columns:1.1fr .9fr;gap:var(--md-sp-6);align-items:center;min-height:420px">
-    <div style="position:relative;z-index:2">
-      <span class="md-label" style="color:var(--md-coral)">El podcast</span>
-      <h2 class="md-claim" style="margin:var(--md-sp-4) 0 var(--md-sp-5)">Conversaciones sobre <span class="md-hl">por qué nos movemos</span></h2>
-      <p class="md-lead" style="opacity:.86;max-width:42ch;margin:0 0 var(--md-sp-6)">Juan Nieto habla con quien sabe de movimiento, dolor y cuerpo. Sin atajos y sin vender nada.</p>
-      <div class="row">
-        <a class="md-btn md-btn--primary" href="#">Escuchar el último</a>
-        <a class="md-btn md-btn--ghost" href="#">Todos los episodios</a>
-      </div>
-    </div>
-    <div style="position:relative;height:100%;min-height:380px">
-      <div class="md-diagonal md-diagonal--right" style="--md-diag-y:34%"></div>
-      <img class="md-figure" src="assets/ponente-placeholder.png" alt="" style="position:absolute;right:-40px;bottom:-48px;height:112%;z-index:1">
-    </div>
-  </div>
-  <p class="note">Hero de web. La foto sangra por el borde inferior derecho, en B/N, con la diagonal detrás. Un solo primario.</p>
-
-  <div class="grid g2" style="margin-top:var(--md-sp-6)">
-    <div>
-      <div class="md-dark" style="position:relative;aspect-ratio:4/5;overflow:hidden;padding:var(--md-margin);display:flex;flex-direction:column;justify-content:center">
-        <div class="md-diagonal md-diagonal--left" style="--md-diag-y:56%;--md-diag-w:80%"></div>
-        <img class="md-figure" src="assets/ponente-placeholder.png" alt="" style="position:absolute;left:-70px;bottom:0;height:74%;z-index:1">
-        <div style="position:relative;z-index:2;margin-left:38%">
-          <span class="md-episode">Episodio 58</span>
-          <h3 class="md-claim" style="font-size:2rem;margin:var(--md-sp-3) 0 var(--md-sp-4)">Antidepresivos y serotonina</h3>
-          <p style="font-weight:500;font-size:1rem;color:#FFFFFF;margin:0">Antón Gómez-Escolar</p>
-        </div>
-      </div>
-      <p class="note">Portada de episodio 4:5. La versión vieja ponía «Episodio 58» en una píldora púrpura: fuera, el púrpura no llega a contraste.</p>
-    </div>
-
-    <div>
-      <div class="md-dark" style="position:relative;aspect-ratio:16/9;overflow:hidden;display:flex;align-items:center;padding:0 var(--md-sp-6)">
-        <div class="md-diagonal md-diagonal--left"></div>
-        <img class="md-figure" src="assets/ponente-placeholder.png" alt="" style="position:absolute;left:-30px;bottom:0;height:104%;z-index:1">
-        <p class="md-claim" style="position:relative;z-index:2;margin-left:42%;font-size:2.1rem">«Salí del dolor crónico <span class="md-hl">yo sola</span>»</p>
-      </div>
-      <p class="note">Miniatura de YouTube 16:9. Aquí la foto puede ir a color si la cara pierde legibilidad al tamaño de miniatura; es la única excepción al B/N.</p>
-    </div>
-  </div>
+  <p class="note">Un solo primario por pantalla. Sin esquinas redondeadas: el isotipo es todo aristas. El botón coral lleva tinta oscura; con blanco encima no llega a contraste.</p>
 </section>
 
 <footer class="sec md-light">
-  <p class="md-label" style="color:var(--md-coral-deep)">Canon</p>
-  <p class="md-body" style="max-width:62ch;margin-top:var(--md-sp-3)">05 Proyectos/Polestar-NEPO-MD/Brand - Movimiento Desencadenado.md · sección «Movimiento Desencadenado 2.0». Tokens: ~/Developer/md-brand/tokens.css</p>
+  <p class="md-label" style="color:var(--md-coral)">Lo que falta decidir</p>
+  <div class="abierto">
+    <p class="md-body" style="margin:0 0 var(--md-sp-3)"><b>Cuál manda, la clara o la oscura.</b> La clara despega más en la parrilla de YouTube y deja a la persona como único color de la pieza; la oscura es la continuidad con los 60 y pico episodios ya publicados. Hasta que se decida, hay dos versiones de todo.</p>
+    <p class="md-body" style="margin:0"><b>Licencia de webfont de Axiforma</b> antes de publicar cualquier página, y unificar el handle: el pack dice <i>@movimientodesencadenado</i> y las piezas pintan <i>@movimiento.desencadenado</i>.</p>
+  </div>
 </footer>
 
+<script>
+  // la cita crece hasta rozar el margen, siempre en dos lineas
+  function ajusta(t){
+    const caja=t.clientWidth; let lo=10, hi=200, best=10;
+    for(let i=0;i<26;i++){
+      const mid=(lo+hi)/2; t.style.fontSize=mid+'px';
+      const lineas=Math.round(t.scrollHeight/mid);
+      if(lineas===2 && t.scrollWidth<=Math.ceil(caja)){best=mid;lo=mid;}else{hi=mid;}
+    }
+    t.style.fontSize=best+'px';
+  }
+  document.fonts.ready.then(()=>{ document.querySelectorAll('.th .cita').forEach(ajusta); window.LISTO=true; });
+  addEventListener('resize', ()=>document.querySelectorAll('.th .cita').forEach(ajusta));
+</script>
 </body>
 </html>

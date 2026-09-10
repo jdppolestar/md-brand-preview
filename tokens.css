@@ -28,11 +28,14 @@
   --md-on-light-muted: #5B5B5C;
 
   /* ---------- ACENTO ----------------------------------------------------- */
-  /* Dos corales, y no son intercambiables: el vivo NO es legible sobre claro. */
-  --md-coral:      #F36F62;   /* acento SOBRE OSCURO (5.76) y relleno de botón */
-  --md-coral-deep: #BE3A2B;   /* texto coral SOBRE CLARO (4.51). El vivo da 2.38 */
-  --md-on-coral:   #1E1E1E;   /* tinta sobre relleno coral (5.76). Blanco da 2.89 */
-  --md-purple:     #6E30AF;   /* SOLO dentro del logo. 2.15 sobre oscuro */
+  /* UN SOLO coral para las dos superficies (decidido 10-sep):
+     3,06:1 sobre la clara (vale para texto grande) y 4,48:1 sobre la oscura. */
+  --md-coral:      #E8503C;
+  --md-on-coral:   #1E1E1E;   /* tinta sobre relleno coral. Blanco no llega */
+  --md-purple:     #6E30AF;   /* SOLO dentro del logo. 2,15 sobre oscuro */
+  /* Tono sobre tono para la flecha de fondo: se lee la forma, no la mancha */
+  --md-flecha-dark:  #333B47;  /* 1,37:1 con la superficie oscura */
+  --md-flecha-light: #D2D2CC;  /* 1,25:1 con la superficie clara */
 
   /* ---------- TIPOGRAFÍA -------------------------------------------------
      Escala 1.25 con base 18, ajustada a lo medido en el carrusel
@@ -68,10 +71,12 @@
 .md-dark { background: var(--md-surface-dark); color: var(--md-on-dark) }
 .md-light{ background: var(--md-surface-light); color: var(--md-on-light) }
 .md-dark  .md-accent{ color: var(--md-coral) }
-.md-light .md-accent{ color: var(--md-coral-deep) }
+.md-light .md-accent{ color: var(--md-coral) }
 
-/* La diagonal: único gesto gráfico heredado de las portadas de episodio.
-   Nace del isotipo. Va DETRÁS de la figura, nunca sobre texto. */
+/* El gesto gráfico es LA FLECHA DEL ISOTIPO (no una banda): base a la altura
+   completa de la pieza, punta hacia el centro, monocroma tono sobre tono.
+   Va DETRÁS de la figura y nunca lleva el acento: el coral se reserva para lo
+   que hay que leer. */
 /* Se confina al lado donde vive la figura: así NO puede cruzar el texto por
    construcción, que es la regla. --right = figura a la derecha. */
 .md-diagonal{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0 }
@@ -100,7 +105,7 @@
 }
 .md-claim em{ font-style:normal; color:inherit }
 .md-dark  .md-claim .md-hl{ color:var(--md-coral) }
-.md-light .md-claim .md-hl{ color:var(--md-coral-deep) }
+.md-light .md-claim .md-hl{ color:var(--md-coral) }
 
 .md-label{
   font-family:var(--md-font); font-weight:700; font-size:var(--md-size-label);
@@ -129,8 +134,8 @@
 /* Secundario: filete. Sobre oscuro va blanco; sobre claro, coral profundo */
 .md-dark  .md-btn--ghost{ border-color:var(--md-on-dark); color:var(--md-on-dark); background:transparent }
 .md-dark  .md-btn--ghost:hover{ background:var(--md-on-dark); color:var(--md-dark-bottom) }
-.md-light .md-btn--ghost{ border-color:var(--md-coral-deep); color:var(--md-coral-deep); background:transparent }
-.md-light .md-btn--ghost:hover{ background:var(--md-coral-deep); color:#FFFFFF }
+.md-light .md-btn--ghost{ border-color:var(--md-coral); color:var(--md-coral); background:transparent }
+.md-light .md-btn--ghost:hover{ background:var(--md-coral); color:#FFFFFF }
 
 /* Terciario: enlace con filete inferior. El coral se raciona, aquí sí cabe */
 .md-link{
@@ -138,7 +143,7 @@
   border-bottom:var(--md-rule) solid currentColor; padding-bottom:2px;
 }
 .md-dark  .md-link{ color:var(--md-coral) }
-.md-light .md-link{ color:var(--md-coral-deep) }
+.md-light .md-link{ color:var(--md-coral) }
 
 /* ============================================================================
    COMPONENTES
@@ -168,15 +173,17 @@
 .md-card--dark{ background:var(--md-dark-bottom); color:var(--md-on-dark) }
 .md-card__media{ aspect-ratio:16/9; object-fit:cover; width:100%; filter:grayscale(1) contrast(1.05) }
 
-/* Foto de ponente: B/N SIEMPRE, a sangre por un borde, nunca en círculo */
-.md-figure{ filter:grayscale(1) contrast(1.05); display:block }
+/* Foto de ponente: A COLOR (decidido 10-sep, son los protagonistas), a sangre
+   por un borde, nunca en círculo. El B/N queda para material de archivo. */
+.md-figure{ display:block }
+.md-figure--bn{ filter:grayscale(1) contrast(1.05) }
 
 /* Cita: el componente que define la marca */
 .md-quote{ position:relative; overflow:hidden; padding:var(--md-margin) }
 .md-quote__attr .n{ font-weight:700; font-size:var(--md-size-h3) }
 .md-quote__attr .e{ font-weight:500; font-size:var(--md-size-small); margin-top:var(--md-sp-1) }
 .md-dark  .md-quote__attr .e{ color:var(--md-coral) }
-.md-light .md-quote__attr .e{ color:var(--md-coral-deep) }
+.md-light .md-quote__attr .e{ color:var(--md-coral) }
 
 /* Lower-third de vídeo (1920x1080: filete coral + nombre + episodio) */
 .md-lower{
