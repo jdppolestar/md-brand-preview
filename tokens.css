@@ -19,6 +19,11 @@
   --md-dark-bottom:   #1E1E1E;
   --md-surface-dark:  linear-gradient(180deg, #252D39 0%, #232426 52%, #1E1E1E 100%);
   --md-surface-light: #E9E9E7;   /* plano, sin degradado */
+  /* La PRINCIPAL es la clara (decidido 10-sep): con el invitado a color, un
+     fondo neutro deja a la persona como unico color de la pieza. La oscura es
+     la alterna y da el ritmo (clara -> oscura -> clara). */
+  --md-surface:       var(--md-surface-light);
+  --md-surface-alt:   var(--md-surface-dark);
   --md-surface-ink:   #2A2A2A;   /* charcoal sólido: bloques pequeños, no lienzos */
 
   /* ---------- TINTA ------------------------------------------------------ */
@@ -32,7 +37,15 @@
      3,06:1 sobre la clara (vale para texto grande) y 4,48:1 sobre la oscura. */
   --md-coral:      #E8503C;
   --md-on-coral:   #1E1E1E;   /* tinta sobre relleno coral. Blanco no llega */
-  --md-purple:     #6E30AF;   /* SOLO dentro del logo. 2,15 sobre oscuro */
+  /* El purpura #6E30AF esta FUERA del sistema (10-sep): con el logo en blanco
+     y negro estricto ya no vive ni dentro del logo. No reintroducirlo. */
+
+  /* ---------- LOGO -------------------------------------------------------
+     Una tinta SIEMPRE: blanco sobre la oscura, negro sobre la clara. Nunca en
+     acento, nunca a color: el logo bicolor no llega a contraste sobre ninguna
+     superficie (2,89 blanco - 2,38 clara - 1,79 y 2,15 oscura). */
+  --md-logo-on-dark:  #FFFFFF;
+  --md-logo-on-light: #000000;
   /* Tono sobre tono para la flecha de fondo: se lee la forma, no la mancha */
   --md-flecha-dark:  #333B47;  /* 1,37:1 con la superficie oscura */
   --md-flecha-light: #D2D2CC;  /* 1,25:1 con la superficie clara */
@@ -68,32 +81,30 @@
 /* ============================================================================
    SUPERFICIES
    ========================================================================== */
-.md-dark { background: var(--md-surface-dark); color: var(--md-on-dark) }
-.md-light{ background: var(--md-surface-light); color: var(--md-on-light) }
+/* Cada superficie declara su tinta y su suelo como variables: asi los
+   componentes se adaptan por HERENCIA (la superficie mas cercana gana) y no
+   por orden de cascada, que es lo que rompia un panel oscuro dentro de una
+   seccion clara. */
+.md-dark { background: var(--md-surface-dark);  color: var(--md-on-dark);
+           --md-ink: var(--md-on-dark);  --md-ground: var(--md-dark-bottom) }
+.md-light{ background: var(--md-surface-light); color: var(--md-on-light);
+           --md-ink: var(--md-on-light); --md-ground: var(--md-surface-light) }
 .md-dark  .md-accent{ color: var(--md-coral) }
 .md-light .md-accent{ color: var(--md-coral) }
 
-/* El gesto gráfico es LA FLECHA DEL ISOTIPO (no una banda): base a la altura
-   completa de la pieza, punta hacia el centro, monocroma tono sobre tono.
-   Va DETRÁS de la figura y nunca lleva el acento: el coral se reserva para lo
-   que hay que leer. */
-/* Se confina al lado donde vive la figura: así NO puede cruzar el texto por
-   construcción, que es la regla. --right = figura a la derecha. */
-.md-diagonal{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0 }
-.md-diagonal::before{
-  content:""; position:absolute; top:var(--md-diag-y,50%);
-  width:var(--md-diag-w,92%); aspect-ratio:7/1; height:auto;   /* el grosor sale del ANCHO:
-     así la banda pesa lo mismo en 16:9 que en 4:5, y el coral sigue racionado */
-  background: var(--md-coral); transform: rotate(-28deg);
-  /* Remate en punta, como el play del isotipo: el extremo que muere dentro de
-     la pieza no se corta en seco, apunta. */
-  clip-path: polygon(0 0, calc(100% - 5.5%) 0, 100% 50%, calc(100% - 5.5%) 100%, 0 100%);
-}
-/* La banda entra por el borde exterior y muere antes de la caja de texto:
-   la figura vive a la derecha (--right) o a la izquierda (--left). */
-.md-diagonal--right::before{ right:-16%; transform-origin:right center }
-.md-diagonal--left::before { left:-16%;  transform-origin:left center; transform: rotate(-28deg) }
-.md-diagonal--left::before { clip-path: polygon(5.5% 0, 100% 0, 100% 100%, 5.5% 100%, 0 50%) }
+/* El gesto grafico es LA FLECHA DEL ISOTIPO. Sustituye a la banda diagonal
+   del sistema de julio, que queda jubilada.
+   Base a la altura completa de la pieza, punta hacia el centro, UNA sola por
+   pieza, detras de la figura y sin cruzar texto nunca.
+   Va MONOCROMA tono sobre tono: con la flecha en acento la pieza se iba al
+   8,8 % de area y el fondo se comia la racion entera; en monocroma queda en
+   0,4 % y el acento se reserva para lo que hay que leer. Un contorno de 2,6 px,
+   ademas, se queda en 0,47 px a tamano de parrilla.
+   El path va inline en cada pieza (formato-md.html, sistema.html); esto solo
+   fija el color por superficie y el que sangre por el borde. */
+.md-flecha{ position:absolute; z-index:0; pointer-events:none }
+.md-dark  .md-flecha path{ fill: var(--md-flecha-dark) }
+.md-light .md-flecha path{ fill: var(--md-flecha-light) }
 
 /* ============================================================================
    TIPOGRAFÍA
@@ -131,11 +142,11 @@
 .md-btn--primary{ background:var(--md-coral); color:var(--md-on-coral) }
 .md-btn--primary:hover{ background:#FF8674 }
 
-/* Secundario: filete. Sobre oscuro va blanco; sobre claro, coral profundo */
-.md-dark  .md-btn--ghost{ border-color:var(--md-on-dark); color:var(--md-on-dark); background:transparent }
-.md-dark  .md-btn--ghost:hover{ background:var(--md-on-dark); color:var(--md-dark-bottom) }
-.md-light .md-btn--ghost{ border-color:var(--md-coral); color:var(--md-coral); background:transparent }
-.md-light .md-btn--ghost:hover{ background:var(--md-coral); color:#FFFFFF }
+/* Secundario: filete en la tinta de la superficie (blanco sobre la oscura,
+   negro sobre la clara). El acento se reserva para el primario: dos elementos
+   en coral compiten. */
+.md-btn--ghost{ border-color:var(--md-ink); color:var(--md-ink); background:transparent }
+.md-btn--ghost:hover{ background:var(--md-ink); color:var(--md-ground) }
 
 /* Terciario: enlace con filete inferior. El coral se raciona, aquí sí cabe */
 .md-link{
@@ -161,8 +172,7 @@
   letter-spacing:var(--md-ls-label); text-transform:uppercase;
 }
 .md-episode::before{ content:""; width:28px; height:var(--md-rule); background:var(--md-coral) }
-.md-dark .md-episode{ color:var(--md-on-dark) }
-.md-light .md-episode{ color:var(--md-on-light) }
+.md-episode{ color:var(--md-ink) }
 
 /* Tarjeta de contenido (web: episodio, artículo, curso) */
 .md-card{
@@ -171,7 +181,7 @@
   border-radius:var(--md-radius);
 }
 .md-card--dark{ background:var(--md-dark-bottom); color:var(--md-on-dark) }
-.md-card__media{ aspect-ratio:16/9; object-fit:cover; width:100%; filter:grayscale(1) contrast(1.05) }
+.md-card__media{ aspect-ratio:16/9; object-fit:cover; width:100% }   /* a color: el B/N es solo archivo */
 
 /* Foto de ponente: A COLOR (decidido 10-sep, son los protagonistas), a sangre
    por un borde, nunca en círculo. El B/N queda para material de archivo. */
