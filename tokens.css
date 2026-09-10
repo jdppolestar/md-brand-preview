@@ -1,0 +1,188 @@
+/* ============================================================================
+   Movimiento Desencadenado 2.0 — tokens de marca
+   Canon: 05 Proyectos/Polestar-NEPO-MD/Brand - Movimiento Desencadenado.md
+   Todos los valores están MEDIDOS sobre el carrusel de referencia
+   (00 Carruseles/20260910 - MD Movimiento filosofia r2 foto) o calculados
+   (contrastes WCAG 2.1). No estimar: si hace falta un valor nuevo, medirlo.
+   ========================================================================== */
+
+@font-face { font-family:"Axiforma"; src:url("fonts/Axiforma-Book.ttf")   format("truetype"); font-weight:400; font-display:swap }
+@font-face { font-family:"Axiforma"; src:url("fonts/Axiforma-Medium.ttf") format("truetype"); font-weight:500; font-display:swap }
+@font-face { font-family:"Axiforma"; src:url("fonts/Axiforma-Bold.ttf")   format("truetype"); font-weight:700; font-display:swap }
+@font-face { font-family:"Axiforma"; src:url("fonts/Axiforma-Black.ttf")  format("truetype"); font-weight:900; font-display:swap }
+
+:root{
+  /* ---------- SUPERFICIES ---------------------------------------------- */
+  /* La oscura NO es plana: azul-morado arriba que muere antes de la mitad. */
+  --md-dark-top:      #252D39;
+  --md-dark-mid:      #232426;
+  --md-dark-bottom:   #1E1E1E;
+  --md-surface-dark:  linear-gradient(180deg, #252D39 0%, #232426 52%, #1E1E1E 100%);
+  --md-surface-light: #E9E9E7;   /* plano, sin degradado */
+  --md-surface-ink:   #2A2A2A;   /* charcoal sólido: bloques pequeños, no lienzos */
+
+  /* ---------- TINTA ------------------------------------------------------ */
+  --md-on-dark:        #FFFFFF;  /* 16.67 sobre el fondo del degradado */
+  --md-on-dark-muted:  #8E8E8E;  /* 5.09 sobre oscuro. No bajar de aquí */
+  --md-on-light:       #2A2A2A;  /* 11.81 sobre claro */
+  --md-on-light-muted: #5B5B5C;
+
+  /* ---------- ACENTO ----------------------------------------------------- */
+  /* Dos corales, y no son intercambiables: el vivo NO es legible sobre claro. */
+  --md-coral:      #F36F62;   /* acento SOBRE OSCURO (5.76) y relleno de botón */
+  --md-coral-deep: #BE3A2B;   /* texto coral SOBRE CLARO (4.51). El vivo da 2.38 */
+  --md-on-coral:   #1E1E1E;   /* tinta sobre relleno coral (5.76). Blanco da 2.89 */
+  --md-purple:     #6E30AF;   /* SOLO dentro del logo. 2.15 sobre oscuro */
+
+  /* ---------- TIPOGRAFÍA -------------------------------------------------
+     Escala 1.25 con base 18, ajustada a lo medido en el carrusel
+     (claim 84 · nombre 46 · contexto 31 · rótulo 26 sobre 1080 px de ancho). */
+  --md-font: "Axiforma", "Helvetica Neue", Arial, sans-serif;
+  --md-size-hero:    clamp(2.75rem, 6.2vw, 4.8rem);   /* claim */
+  --md-size-h1:      clamp(2.2rem, 4.4vw, 3.05rem);
+  --md-size-h2:      clamp(1.75rem, 3vw, 2.45rem);
+  --md-size-h3:      1.95rem;
+  --md-size-lead:    1.35rem;
+  --md-size-body:    1.125rem;   /* 18 px */
+  --md-size-small:   0.95rem;
+  --md-size-label:   0.8rem;     /* rótulos en mayúscula */
+
+  --md-lh-claim: 1.00;   /* medido: interlineado 1.00 en el claim */
+  --md-lh-text:  1.42;   /* medido en el contexto */
+  --md-ls-claim: -0.03em;
+  --md-ls-label: 0.18em;
+
+  /* ---------- RITMO ------------------------------------------------------ */
+  /* Base 8. El margen de la tarjeta (90 px sobre 1080 = 8.3 %) cae en --md-sp-7. */
+  --md-sp-1: 4px;  --md-sp-2: 8px;  --md-sp-3: 16px; --md-sp-4: 24px;
+  --md-sp-5: 32px; --md-sp-6: 48px; --md-sp-7: 90px; --md-sp-8: 128px;
+  --md-margin: clamp(24px, 8.3vw, 90px);   /* margen de marca, proporcional */
+
+  --md-radius: 0px;      /* la marca no redondea: el isotipo es todo aristas */
+  --md-rule:   2px;      /* grosor de la barra de progreso y de los filetes */
+}
+
+/* ============================================================================
+   SUPERFICIES
+   ========================================================================== */
+.md-dark { background: var(--md-surface-dark); color: var(--md-on-dark) }
+.md-light{ background: var(--md-surface-light); color: var(--md-on-light) }
+.md-dark  .md-accent{ color: var(--md-coral) }
+.md-light .md-accent{ color: var(--md-coral-deep) }
+
+/* La diagonal: único gesto gráfico heredado de las portadas de episodio.
+   Nace del isotipo. Va DETRÁS de la figura, nunca sobre texto. */
+/* Se confina al lado donde vive la figura: así NO puede cruzar el texto por
+   construcción, que es la regla. --right = figura a la derecha. */
+.md-diagonal{ position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0 }
+.md-diagonal::before{
+  content:""; position:absolute; top:var(--md-diag-y,50%);
+  width:var(--md-diag-w,92%); aspect-ratio:7/1; height:auto;   /* el grosor sale del ANCHO:
+     así la banda pesa lo mismo en 16:9 que en 4:5, y el coral sigue racionado */
+  background: var(--md-coral); transform: rotate(-28deg);
+  /* Remate en punta, como el play del isotipo: el extremo que muere dentro de
+     la pieza no se corta en seco, apunta. */
+  clip-path: polygon(0 0, calc(100% - 5.5%) 0, 100% 50%, calc(100% - 5.5%) 100%, 0 100%);
+}
+/* La banda entra por el borde exterior y muere antes de la caja de texto:
+   la figura vive a la derecha (--right) o a la izquierda (--left). */
+.md-diagonal--right::before{ right:-16%; transform-origin:right center }
+.md-diagonal--left::before { left:-16%;  transform-origin:left center; transform: rotate(-28deg) }
+.md-diagonal--left::before { clip-path: polygon(5.5% 0, 100% 0, 100% 100%, 5.5% 100%, 0 50%) }
+
+/* ============================================================================
+   TIPOGRAFÍA
+   ========================================================================== */
+.md-claim{
+  font-family:var(--md-font); font-weight:900; font-size:var(--md-size-hero);
+  line-height:var(--md-lh-claim); letter-spacing:var(--md-ls-claim);
+  text-transform:none;                    /* caja mixta: las mayúsculas son Polestar */
+}
+.md-claim em{ font-style:normal; color:inherit }
+.md-dark  .md-claim .md-hl{ color:var(--md-coral) }
+.md-light .md-claim .md-hl{ color:var(--md-coral-deep) }
+
+.md-label{
+  font-family:var(--md-font); font-weight:700; font-size:var(--md-size-label);
+  letter-spacing:var(--md-ls-label); text-transform:uppercase;
+}
+.md-body{ font-family:var(--md-font); font-weight:400; font-size:var(--md-size-body); line-height:var(--md-lh-text) }
+.md-lead{ font-family:var(--md-font); font-weight:400; font-size:var(--md-size-lead); line-height:1.38 }
+
+/* ============================================================================
+   CTA — un solo botón, tres pesos. Nunca dos primarios en la misma pantalla.
+   ========================================================================== */
+.md-btn{
+  display:inline-flex; align-items:center; gap:var(--md-sp-3);
+  font-family:var(--md-font); font-weight:700; font-size:var(--md-size-body);
+  letter-spacing:0.01em; padding:18px 34px; border:var(--md-rule) solid transparent;
+  border-radius:var(--md-radius); text-decoration:none; cursor:pointer;
+  transition:transform .16s ease, background-color .16s ease, color .16s ease;
+}
+.md-btn:hover{ transform:translateY(-2px) }
+.md-btn:focus-visible{ outline:3px solid var(--md-coral); outline-offset:3px }
+
+/* Primario: relleno coral, tinta OSCURA (con blanco daría 2.89, falla) */
+.md-btn--primary{ background:var(--md-coral); color:var(--md-on-coral) }
+.md-btn--primary:hover{ background:#FF8674 }
+
+/* Secundario: filete. Sobre oscuro va blanco; sobre claro, coral profundo */
+.md-dark  .md-btn--ghost{ border-color:var(--md-on-dark); color:var(--md-on-dark); background:transparent }
+.md-dark  .md-btn--ghost:hover{ background:var(--md-on-dark); color:var(--md-dark-bottom) }
+.md-light .md-btn--ghost{ border-color:var(--md-coral-deep); color:var(--md-coral-deep); background:transparent }
+.md-light .md-btn--ghost:hover{ background:var(--md-coral-deep); color:#FFFFFF }
+
+/* Terciario: enlace con filete inferior. El coral se raciona, aquí sí cabe */
+.md-link{
+  font-family:var(--md-font); font-weight:700; text-decoration:none;
+  border-bottom:var(--md-rule) solid currentColor; padding-bottom:2px;
+}
+.md-dark  .md-link{ color:var(--md-coral) }
+.md-light .md-link{ color:var(--md-coral-deep) }
+
+/* ============================================================================
+   COMPONENTES
+   ========================================================================== */
+
+/* Barra de progreso / navegación: 190x2 medido en la tarjeta */
+.md-progress{ width:190px; height:var(--md-rule); background:rgba(140,140,140,.4) }
+.md-progress > i{ display:block; height:100%; background:var(--md-coral) }
+
+/* Marca de episodio. Sustituye a la píldora púrpura del sistema viejo:
+   el púrpura no llega a contraste y el relleno grande rompe la ración de coral. */
+.md-episode{
+  display:inline-flex; align-items:center; gap:var(--md-sp-2);
+  font-family:var(--md-font); font-weight:700; font-size:var(--md-size-label);
+  letter-spacing:var(--md-ls-label); text-transform:uppercase;
+}
+.md-episode::before{ content:""; width:28px; height:var(--md-rule); background:var(--md-coral) }
+.md-dark .md-episode{ color:var(--md-on-dark) }
+.md-light .md-episode{ color:var(--md-on-light) }
+
+/* Tarjeta de contenido (web: episodio, artículo, curso) */
+.md-card{
+  position:relative; display:flex; flex-direction:column; gap:var(--md-sp-3);
+  padding:var(--md-sp-6); background:var(--md-surface-light); color:var(--md-on-light);
+  border-radius:var(--md-radius);
+}
+.md-card--dark{ background:var(--md-dark-bottom); color:var(--md-on-dark) }
+.md-card__media{ aspect-ratio:16/9; object-fit:cover; width:100%; filter:grayscale(1) contrast(1.05) }
+
+/* Foto de ponente: B/N SIEMPRE, a sangre por un borde, nunca en círculo */
+.md-figure{ filter:grayscale(1) contrast(1.05); display:block }
+
+/* Cita: el componente que define la marca */
+.md-quote{ position:relative; overflow:hidden; padding:var(--md-margin) }
+.md-quote__attr .n{ font-weight:700; font-size:var(--md-size-h3) }
+.md-quote__attr .e{ font-weight:500; font-size:var(--md-size-small); margin-top:var(--md-sp-1) }
+.md-dark  .md-quote__attr .e{ color:var(--md-coral) }
+.md-light .md-quote__attr .e{ color:var(--md-coral-deep) }
+
+/* Lower-third de vídeo (1920x1080: filete coral + nombre + episodio) */
+.md-lower{
+  display:inline-flex; flex-direction:column; gap:6px;
+  border-left:6px solid var(--md-coral); padding:10px 0 10px 20px;
+  background:transparent; color:#FFFFFF; text-shadow:0 2px 18px rgba(13,20,33,.55);
+}
+.md-lower .n{ font-family:var(--md-font); font-weight:900; font-size:2.2rem; line-height:1 }
+.md-lower .r{ font-family:var(--md-font); font-weight:500; font-size:1.1rem; color:var(--md-coral) }
