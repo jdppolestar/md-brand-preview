@@ -36,79 +36,102 @@
                             border-bottom:1px solid color-mix(in srgb, var(--md-ink) 14%, transparent)}
   table.med th{font-weight:700;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6}
 
-  /* PORTADA: la careta de la marca dentro de su MARCO FIJO 1920 x 1080,
-     que es el tamano real de una entradilla de YouTube. La pagina no cambia de
-     color: la que cambia es la pieza, como cambiaria en el vídeo.
+  /* PORTADA: la careta, dentro de su MARCO FIJO 1920 x 1080 (entradilla de
+     YouTube). La pagina no cambia de color: cambia la pieza.
 
-     El cambio va con GOLPE, no con transicion (ver la nota del analisis):
-       - corte de un fotograma en el instante del contacto, no fundido
-       - fotograma de impacto: un destello muy breve de altisimo contraste
-       - la energia se reparte al cuadro: sacudida de 4 px amortiguada
-       - desenfoque de movimiento durante el vuelo y asentamiento despues
-       - el texto no entra hasta que el golpe se ha asentado                      */
+     LA DINAMICA, que es lo que hace que se lea como un golpe y no como una
+     transicion con efectos encima:
+       1. La flecha ACELERA hasta el impacto. No frena antes de llegar: el
+          frenazo lo produce el golpe, no la curva.
+       2. Se estira al viajar y se aplasta al chocar (squash & stretch), y el
+          desenfoque de movimiento es maximo donde es maxima la velocidad.
+       3. El impacto tiene DOS cuerpos: la segunda pieza acusa el golpe, sale
+          desplazada y vuelve.
+       4. El cambio de superficie NACE del punto de contacto y se propaga en
+          110 ms. No es un corte plano en todo el cuadro: es la consecuencia de
+          ese golpe, y por eso sale de ahi.
+       5. El logo cambia de tinta por POSICION, no por tiempo: hay dos capas
+          completas, la oscura con el logo blanco y la clara con el negro, y el
+          frente las separa. Donde ya paso, el logo es negro.
+       6. La energia sobrante se reparte: destello de dos fotogramas, sacudida
+          del cuadro amortiguada y asentamiento del logo. El texto espera.      */
   .hero{position:relative;display:grid;grid-template-columns:.86fr 1.14fr;
         gap:var(--md-sp-8);align-items:center;
         padding:calc(var(--md-sp-8) * 1.2) var(--md-margin)}
   .hero > *{min-width:0}
   .marco{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size;
-         border:1px solid color-mix(in srgb, var(--md-ink) 16%, transparent)}
+         border:1px solid color-mix(in srgb, var(--md-ink) 16%, transparent);
+         --cx:34%; --cy:48%}   /* punto de contacto, medido por JS al cargar */
   .lienzo{position:absolute;inset:0}
-  .fondo{position:absolute;inset:0}
-  .fondo--claro{background:var(--md-surface-light)}
-  .fondo--oscuro{background:var(--md-surface-dark)}
+  .capa{position:absolute;inset:0}
+  .capa--oscura{background:var(--md-surface-dark);color:#fff}
+  .capa--clara {background:var(--md-surface-light);color:#000;
+                clip-path:circle(150% at var(--cx) var(--cy))}
   .destello{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
   /* el lockup, centrado exacto y a su tamano medido: 856 de 1920 (44,6 %) con el
      simbolo a 173 de 1080 (16 % del alto = 9 % del ancho) */
   .marco .lockup{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-                 --H:9cqw;display:flex;align-items:center;color:#fff;white-space:nowrap}
+                 --H:9cqw;display:flex;align-items:center;white-space:nowrap}
   .lockup .iso{height:var(--H);width:calc(var(--H) * 1.1517);flex:none;overflow:visible}
-  .lockup .iso path{fill:currentColor}
+  .lockup .iso path{fill:currentColor;transform-box:fill-box;transform-origin:center}
   .word{margin-left:calc(var(--H) * 0.271);font-weight:700;font-size:calc(var(--H) * 0.438);
         line-height:.99;letter-spacing:-.012em}
-  .replay{margin-top:var(--md-sp-6);display:inline-block;font-size:.85rem;background:none;border:0;
+  .mandos{display:flex;gap:var(--md-sp-5);margin-top:var(--md-sp-6);flex-wrap:wrap}
+  .replay{display:inline-block;font-size:.85rem;background:none;border:0;
           padding:0 0 2px;cursor:pointer;font-family:var(--md-font);font-weight:700;
           color:var(--md-coral);border-bottom:var(--md-rule) solid currentColor}
 
   /* Linea de tiempo de 2,6 s. El CONTACTO cae al 42,3 % = 1,10 s. */
-  .play .lienzo    { animation: md-sacude  2.6s linear forwards }
-  .play .fondo--oscuro{ animation: md-corte 2.6s linear forwards }
-  .play .flecha-iso{ animation: md-vuelo   2.6s cubic-bezier(.5,.02,.24,1) forwards }
-  .play .eme       { animation: md-eme     2.6s linear forwards }
-  .play .marco .lockup{ animation: md-tinta 2.6s linear forwards }
-  .play .destello  { animation: md-destello 2.6s linear forwards }
-  .play .word      { animation: md-palabra 2.6s ease-out forwards }
-  .play .hero__txt { animation: md-entra   2.6s ease-out forwards }
-  /* corte seco: 42,29 -> 42,3 % son 0,26 ms, es decir, el mismo fotograma */
-  @keyframes md-corte  { 0%,42.29%{opacity:1} 42.3%,100%{opacity:0} }
-  /* Tinta y asentamiento: el golpe deja al logo un 3,5 % mas grande y vuelve.
-     Son los 3 o 4 fotogramas de settle que hacen que el impacto tenga masa. */
-  @keyframes md-tinta  {
-    0%,42.29%{ color:#fff; transform:translate(-50%,-50%) scale(1) }
-    42.3%    { color:#000; transform:translate(-50%,-50%) scale(1.035) }
-    50%,100% { color:#000; transform:translate(-50%,-50%) scale(1) }
+  .play .lienzo     { animation: md-sacude   2.6s linear forwards }
+  .play .capa--clara{ animation: md-frente   2.6s cubic-bezier(.1,.8,.3,1) forwards }
+  .play .flecha-iso { animation: md-vuelo    2.6s linear forwards }
+  .play .eme        { animation: md-eme      2.6s linear forwards }
+  .play .lockup     { animation: md-asienta  2.6s linear forwards }
+  .play .destello   { animation: md-destello 2.6s linear forwards }
+  .play .word       { animation: md-palabra  2.6s ease-out forwards }
+  .play .hero__txt  { animation: md-entra    2.6s ease-out forwards }
+
+  /* 1 y 2: el vuelo. Acelera (los tramos crecen), se estira, y el desenfoque es
+     maximo donde la velocidad es maxima. En el contacto: parado en seco y
+     aplastado. Luego rebota y asienta. */
+  @keyframes md-vuelo {
+    0%      { transform:translateX(-560px) scale(1,1);       filter:blur(0) }
+    14%     { transform:translateX(-500px) scale(1.06,.97);  filter:blur(3px) }
+    28%     { transform:translateX(-360px) scale(1.22,.92);  filter:blur(11px) }
+    38%     { transform:translateX(-150px) scale(1.32,.88);  filter:blur(16px) }
+    42.3%   { transform:translateX(7px)    scale(.88,1.12);  filter:blur(0) }
+    47%     { transform:translateX(-3px)   scale(1.04,.97);  filter:blur(0) }
+    52%     { transform:translateX(1px)    scale(.99,1.01);  filter:blur(0) }
+    58%,100%{ transform:translateX(0)      scale(1,1);       filter:blur(0) }
   }
-  @keyframes md-eme    { 0%,42.29%{opacity:0} 42.3%,100%{opacity:1} }
-  /* vuelo con desenfoque de movimiento y un sobrepaso de 9 unidades que asienta */
-  @keyframes md-vuelo  {
-    0%     { transform:translateX(-560px); filter:blur(14px) }
-    38%    { filter:blur(6px) }
-    42.3%  { transform:translateX(9px);    filter:blur(0) }
-    50%    { transform:translateX(-2px) }
-    56%,100%{ transform:translateX(0);     filter:blur(0) }
+  /* 3: la otra pieza acusa el golpe. Aparece en el fotograma del contacto,
+     desplazada por el impacto, y vuelve en 200 ms. */
+  @keyframes md-eme {
+    0%,42.29%{ opacity:0; transform:translateX(0) }
+    42.3%    { opacity:1; transform:translateX(17px) }
+    50%      { opacity:1; transform:translateX(-3px) }
+    56%,100% { opacity:1; transform:translateX(0) }
   }
-  /* El fotograma de impacto: blanco pleno durante 2 fotogramas a 60 fps (33 ms)
-     y apagado en 4 mas. Es lo que hace que el corte se lea como golpe y no como
-     un fallo de reproduccion: el ojo retiene el destello. */
-  @keyframes md-destello{ 0%,42.29%{opacity:0} 42.3%{opacity:.88} 43.6%{opacity:.88} 45.5%,100%{opacity:0} }
-  /* la sacudida reparte la energia al cuadro entero, amortiguada */
+  /* 4 y 5: el cambio de superficie NACE del contacto y llena el cuadro en 110 ms */
+  @keyframes md-frente {
+    0%,42.29%{ clip-path:circle(0% at var(--cx) var(--cy)) }
+    45.8%,100%{ clip-path:circle(150% at var(--cx) var(--cy)) }
+  }
+  /* 6: destello de dos fotogramas a 60 fps, sacudida y asentamiento */
+  @keyframes md-destello{ 0%,42.29%{opacity:0} 42.3%{opacity:.85} 43.6%{opacity:.85} 45.5%,100%{opacity:0} }
   @keyframes md-sacude {
     0%,42.29%{ transform:translate(0,0) }
-    43%  { transform:translate(-5px,2px) }
-    44%  { transform:translate(3px,-2px) }
+    43%  { transform:translate(-6px,3px) }
+    44%  { transform:translate(4px,-2px) }
     45%  { transform:translate(-2px,1px) }
     46%,100%{ transform:translate(0,0) }
   }
-  @keyframes md-palabra{ 0%,46%{opacity:0;transform:translateX(-14px)} 60%,100%{opacity:1;transform:translateX(0)} }
+  @keyframes md-asienta {
+    0%,42.29%{ transform:translate(-50%,-50%) scale(1) }
+    42.3%    { transform:translate(-50%,-50%) scale(1.04) }
+    51%,100% { transform:translate(-50%,-50%) scale(1) }
+  }
+  @keyframes md-palabra{ 0%,47%{opacity:0;transform:translateX(-14px)} 61%,100%{opacity:1;transform:translateX(0)} }
   @keyframes md-entra  { 0%,50%{opacity:0;transform:translateY(10px)} 70%,100%{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: reduce){ .play *{animation:none !important} }
   @media (max-width:900px){
@@ -155,22 +178,32 @@
     <p class="md-label" style="color:var(--md-coral);margin:0 0 var(--md-sp-4)">Movimiento Desencadenado</p>
     <h1 class="md-claim" style="margin:0;max-width:14ch">Propuesta de <span class="md-hl">marca</span></h1>
     <p class="md-lead" style="max-width:50ch;margin-top:var(--md-sp-5);opacity:.88">Una evolución del sistema que ya usa el canal, no un cambio de marca. Todo lo que hay aquí está medido sobre las piezas publicadas, o calculado. Estado a 10 de septiembre.</p>
-    <button class="replay" type="button" id="replay">Volver a ver la careta</button>
+    <div class="mandos">
+      <button class="replay" type="button" id="replay">Volver a ver la careta</button>
+      <button class="replay" type="button" id="lento">A cámara lenta</button>
+    </div>
   </div>
   <div class="hero__marco">
     <div class="marco" id="careta">
       <div class="lienzo">
-        <div class="fondo fondo--claro"></div>
-        <div class="fondo fondo--oscuro"></div>
-        <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
-            <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
-            <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
-          </svg>
-          <div class="word">Movimiento<br>Desencadenado</div></div>
+        <div class="capa capa--oscura">
+          <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
+              <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
+              <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
+            </svg>
+            <div class="word">Movimiento<br>Desencadenado</div></div>
+        </div>
+        <div class="capa capa--clara">
+          <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
+              <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
+              <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
+            </svg>
+            <div class="word">Movimiento<br>Desencadenado</div></div>
+        </div>
         <div class="destello"></div>
       </div>
     </div>
-    <p class="pie"><b>Careta · 1920 × 1080.</b> La flecha entra, hace contacto con la otra mitad del isotipo y en ese fotograma la pieza cambia de oscura a clara. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
+    <p class="pie"><b>Careta · 1920 × 1080.</b> La flecha acelera, golpea la otra mitad del isotipo y el cambio de superficie sale de ese punto. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
   </div>
 </header>
 
@@ -481,17 +514,41 @@
     }
     t.style.fontSize=best+'px';
   }
-  // la careta: se reproduce al abrir y se puede volver a ver
+  // El punto de contacto no se estima: es donde el trazado de la flecha se
+  // solapa con el de la segunda pieza (x 152,96 a 163,70 en el sistema del
+  // isotipo). Se mide en pantalla y se pasa a la careta como porcentaje.
   const portada = document.getElementById('portada');
+  const marco = document.getElementById('careta');
+  function contacto(){
+    const svg = marco.querySelector('.capa--oscura .iso');
+    const ctm = svg.getScreenCTM(); if(!ctm) return;
+    const p = svg.createSVGPoint(); p.x = 158.3; p.y = 91.0;
+    const q = p.matrixTransform(ctm);
+    const r = marco.getBoundingClientRect();
+    marco.style.setProperty('--cx', ((q.x-r.left)/r.width*100).toFixed(2)+'%');
+    marco.style.setProperty('--cy', ((q.y-r.top )/r.height*100).toFixed(2)+'%');
+    window.CONTACTO=[marco.style.getPropertyValue('--cx'), marco.style.getPropertyValue('--cy')];
+  }
+  addEventListener('resize', contacto);
+
+  // la careta: se reproduce al abrir, se repite y se puede ver a camara lenta
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  function careta(){
+  function careta(vel){
     if (reduce) return;
+    contacto();
     portada.classList.remove('play');
     void portada.offsetWidth;              // fuerza el reinicio de la animacion
+    portada.style.setProperty('--vel', vel||'1');
     portada.classList.add('play');
+    requestAnimationFrame(()=>{
+      portada.querySelectorAll('*').forEach(el=>{
+        el.getAnimations().forEach(a=>{ a.playbackRate = vel||1; });
+      });
+    });
   }
-  document.getElementById('replay').addEventListener('click', careta);
-  if (reduce) document.getElementById('replay').hidden = true;
+  document.getElementById('replay').addEventListener('click', ()=>careta(1));
+  document.getElementById('lento').addEventListener('click', ()=>careta(0.25));
+  if (reduce) document.querySelector('.mandos').hidden = true;
 
   document.fonts.ready.then(()=>{ document.querySelectorAll('.th .cita').forEach(ajusta); careta(); window.LISTO=true; });
   addEventListener('resize', ()=>document.querySelectorAll('.th .cita').forEach(ajusta));
