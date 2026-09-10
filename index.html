@@ -39,30 +39,28 @@
   /* PORTADA: la careta, dentro de su MARCO FIJO 1920 x 1080 (entradilla de
      YouTube). La pagina no cambia de color: cambia la pieza.
 
-     LA DINAMICA: EL MOVIMIENTO PREPARA EL GOLPE, Y EL CAMBIO NO TIENE FORMA.
-       1. El logo empieza DESCOMPUESTO: sus dos mitades, fuera de cuadro, una
-          por cada lado. La marca se llama Desencadenado; que se forme es el
-          argumento de la pieza.
-       2. Entran suaves y CORTAS, y frenan separadas EN EL CENTRO del cuadro.
-          Ahi hay una pausa breve: el silencio antes del golpe es lo que hace
-          que el golpe exista.
-       3. Toman impulso hacia atras y ENCAJAN de un tiron: 72 ms, con
-          desenfoque de movimiento solo en ese tramo.
+     LA DINAMICA: UN ESLABON QUE SE UNE, VISTO DE CERCA Y EN RETROCESO.
+       1. Se arranca MUY CERCA del logo, a 4,4 aumentos: las dos mitades estan
+          fuera de cuadro por sus lados y solo se intuye el hueco entre ellas.
+       2. La camara RETROCEDE (zoom out) mientras las dos piezas se acercan muy
+          despacio. Los dos movimientos son continuos y terminan juntos: el
+          retroceso aterriza en el mismo fotograma en que las piezas encajan.
+       3. Antes del encaje hay una anticipacion minima (retroceden un poco) y
+          un tiron final de 88 ms, el unico tramo con desenfoque de movimiento.
        4. En el fotograma del encaje, TODO cambia a la vez: la superficie pasa
           a clara, el logo a negro, destello de 33 ms, sacudida amortiguada y
           asentamiento. El cambio no barre, ni se expande, ni deja rastro: no
-          tiene forma propia, y por eso todo el merito se lo lleva el
-          movimiento que lo ha preparado.
+          tiene forma propia, y por eso el merito se lo lleva el movimiento.
        5. Despues, el TITULO SALE POR EL LADO DERECHO del isotipo, descubierto
-          por una mascara, mientras el conjunto se recoloca a la izquierda para
-          quedar centrado como lockup. Corto tambien.
+          por una mascara, mientras el isotipo se recoloca a la izquierda para
+          que el conjunto quede centrado como lockup.
        6. El texto de la portada entra al final.                                */
   .hero{position:relative;display:grid;grid-template-columns:.86fr 1.14fr;
         gap:var(--md-sp-8);align-items:center;
         padding:calc(var(--md-sp-8) * 1.2) var(--md-margin)}
   .hero > *{min-width:0}
   .marco{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size;
-         border:1px solid color-mix(in srgb, var(--md-ink) 16%, transparent)}
+         border:1px solid color-mix(in srgb, var(--md-ink) 16%, transparent); --dx:0px}
   .lienzo{position:absolute;inset:0}
   .capa{position:absolute;inset:0}
   .capa--oscura{background:var(--md-surface-dark);color:#fff}
@@ -71,12 +69,19 @@
   .destello{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
   /* el lockup, centrado exacto y a su tamano medido: 856 de 1920 (44,6 %) con el
      simbolo a 173 de 1080 (16 % del alto = 9 % del ancho) */
-  /* --dx: lo que hay que correr el lockup a la derecha para que el ISOTIPO
-     quede centrado en el cuadro mientras el titulo aun no ha salido.
-     Es (aire + ancho del titulo) / 2, medido por JS. */
+  /* El zoom vive en un envoltorio propio, centrado en el cuadro, para que el
+     retroceso no arrastre ningun otro desplazamiento. */
+  .zoom{position:absolute;inset:0;transform-origin:50% 50%}
+  /* En la careta el lockup mide lo que el ISOTIPO, y va centrado en el cuadro:
+     asi el retroceso de camara escala alrededor del propio isotipo. El titulo
+     cuelga a su derecha FUERA DEL FLUJO, y solo cuando ya ha salido se corre el
+     conjunto --dx a la izquierda para quedar centrado como lockup.
+     --dx = (aire + ancho del titulo) / 2, medido por JS. */
   .marco .lockup{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-                 --H:9cqw; --dx:0px; display:flex;align-items:center;white-space:nowrap}
-  .marco .word{clip-path:inset(0 0 0 0)}
+                 --H:9cqw; display:block; white-space:nowrap}
+  .marco .iso{display:block}
+  .marco .word{position:absolute;left:100%;top:50%;margin-left:calc(var(--H) * 0.271);
+               transform:translateY(-50%);clip-path:inset(0 0 0 0)}
   .lockup .iso{height:var(--H);width:calc(var(--H) * 1.1517);flex:none;overflow:visible}
   .lockup .iso path{fill:currentColor;transform-box:fill-box;transform-origin:center}
   .word{margin-left:calc(var(--H) * 0.271);font-weight:700;font-size:calc(var(--H) * 0.438);
@@ -86,68 +91,72 @@
           padding:0 0 2px;cursor:pointer;font-family:var(--md-font);font-weight:700;
           color:var(--md-coral);border-bottom:var(--md-rule) solid currentColor}
 
-  /* Linea de tiempo de 1,8 s. El ENCAJE cae al 52 % = 0,94 s. */
-  .play .lienzo     { animation: md-sacude   1.8s linear forwards }
-  .play .capa--oscura{ animation: md-corte   1.8s linear forwards }
-  .play .flecha-iso { animation: md-flecha   1.8s linear forwards }
-  .play .eme        { animation: md-eme      1.8s linear forwards }
-  .play .lockup     { animation: md-lockup   1.8s linear forwards }
-  .play .destello   { animation: md-destello 1.8s linear forwards }
-  .play .word       { animation: md-palabra  1.8s cubic-bezier(.2,.7,.3,1) forwards }
-  .play .hero__txt  { animation: md-entra    1.8s ease-out forwards }
+  /* Linea de tiempo de 2,2 s. El ENCAJE cae al 70 % = 1,54 s. */
+  .play .lienzo     { animation: md-sacude   2.2s linear forwards }
+  .play .capa--oscura{ animation: md-corte   2.2s linear forwards }
+  .play .zoom       { animation: md-zoom     2.2s linear forwards }
+  .play .flecha-iso { animation: md-flecha   2.2s linear forwards }
+  .play .eme        { animation: md-eme      2.2s linear forwards }
+  .play .lockup     { animation: md-lockup   2.2s linear forwards }
+  .play .destello   { animation: md-destello 2.2s linear forwards }
+  .play .word       { animation: md-palabra  2.2s cubic-bezier(.2,.7,.3,1) forwards }
+  .play .hero__txt  { animation: md-entra    2.2s ease-out forwards }
 
-  /* Las dos mitades entran suaves y cortas, frenan separadas, esperan un
-     instante, toman impulso y encajan de un tiron. El desenfoque de
-     movimiento solo existe en ese tiron. */
+  /* El retroceso de camara: continuo, y aterriza en el fotograma del encaje */
+  @keyframes md-zoom {
+    0%   { transform:scale(4.4);  animation-timing-function:cubic-bezier(.35,.15,.5,1) }
+    62%  { transform:scale(1.18); animation-timing-function:linear }
+    66%  { transform:scale(1.12); animation-timing-function:cubic-bezier(.7,0,.9,.5) }
+    70%,100%{ transform:scale(1) }
+  }
+  /* Las dos mitades se acercan muy despacio y encajan de un tiron */
   @keyframes md-flecha {
-    0%     { transform:translateX(-380px); filter:blur(0);
-             animation-timing-function:cubic-bezier(.25,.62,.35,1) }
-    32%    { transform:translateX(-44px);  animation-timing-function:linear }
-    44%    { transform:translateX(-44px);  animation-timing-function:ease-in }
-    48%    { transform:translateX(-56px);  filter:blur(0);
+    0%     { transform:translateX(-165px); filter:blur(0);
+             animation-timing-function:cubic-bezier(.35,.15,.5,1) }
+    62%    { transform:translateX(-14px);  animation-timing-function:ease-in }
+    66%    { transform:translateX(-19px);  filter:blur(0);
              animation-timing-function:cubic-bezier(.72,0,.92,.42) }
-    50.5%  { filter:blur(9px) }
-    52%    { transform:translateX(6px);    filter:blur(0);
+    68.5%  { filter:blur(7px) }
+    70%    { transform:translateX(5px);    filter:blur(0);
              animation-timing-function:ease-out }
-    57%    { transform:translateX(-2px) }
-    62%,100%{ transform:translateX(0) }
+    75%    { transform:translateX(-2px) }
+    80%,100%{ transform:translateX(0) }
   }
   @keyframes md-eme {
-    0%     { transform:translateX(380px);  filter:blur(0);
-             animation-timing-function:cubic-bezier(.25,.62,.35,1) }
-    32%    { transform:translateX(44px);   animation-timing-function:linear }
-    44%    { transform:translateX(44px);   animation-timing-function:ease-in }
-    48%    { transform:translateX(56px);   filter:blur(0);
+    0%     { transform:translateX(165px);  filter:blur(0);
+             animation-timing-function:cubic-bezier(.35,.15,.5,1) }
+    62%    { transform:translateX(14px);   animation-timing-function:ease-in }
+    66%    { transform:translateX(19px);   filter:blur(0);
              animation-timing-function:cubic-bezier(.72,0,.92,.42) }
-    50.5%  { filter:blur(9px) }
-    52%    { transform:translateX(-6px);   filter:blur(0);
+    68.5%  { filter:blur(7px) }
+    70%    { transform:translateX(-5px);   filter:blur(0);
              animation-timing-function:ease-out }
-    57%    { transform:translateX(2px) }
-    62%,100%{ transform:translateX(0) }
+    75%    { transform:translateX(2px) }
+    80%,100%{ transform:translateX(0) }
   }
   /* El cambio de superficie: un fotograma, en todo el cuadro, sin forma propia */
-  @keyframes md-corte  { 0%,51.99%{opacity:1} 52%,100%{opacity:0} }
+  @keyframes md-corte  { 0%,69.99%{opacity:1} 70%,100%{opacity:0} }
   /* Fotograma de impacto: blanco pleno 33 ms y apagado en 4 fotogramas mas */
-  @keyframes md-destello{ 0%,51.99%{opacity:0} 52%{opacity:.85} 53.8%{opacity:.85} 56.5%,100%{opacity:0} }
+  @keyframes md-destello{ 0%,69.99%{opacity:0} 70%{opacity:.85} 71.5%{opacity:.85} 73.7%,100%{opacity:0} }
   @keyframes md-sacude {
-    0%,51.99%{ transform:translate(0,0) }
-    52.9%{ transform:translate(-6px,3px) }
-    54.2%{ transform:translate(4px,-2px) }
-    55.5%{ transform:translate(-2px,1px) }
-    56.8%,100%{ transform:translate(0,0) }
+    0%,69.99%{ transform:translate(0,0) }
+    70.7%{ transform:translate(-6px,3px) }
+    71.8%{ transform:translate(4px,-2px) }
+    72.9%{ transform:translate(-2px,1px) }
+    74%,100%{ transform:translate(0,0) }
   }
-  /* El encaje ocurre con el ISOTIPO centrado; despues el conjunto se recoloca
-     a la izquierda mientras sale el titulo. */
+  /* El asentamiento del golpe y, despues, el conjunto se recoloca a la
+     izquierda mientras sale el titulo, ya con la camara parada. */
   @keyframes md-lockup {
-    0%,51.99%{ transform:translate(-50%,-50%) translateX(var(--dx)) scale(1) }
-    52%      { transform:translate(-50%,-50%) translateX(var(--dx)) scale(1.05) }
-    58%      { transform:translate(-50%,-50%) translateX(var(--dx)) scale(1);
+    0%,69.99%{ transform:translate(-50%,-50%) scale(1) }
+    70%      { transform:translate(-50%,-50%) scale(1.05) }
+    77%      { transform:translate(-50%,-50%) scale(1);
                animation-timing-function:cubic-bezier(.2,.7,.3,1) }
-    76%,100% { transform:translate(-50%,-50%) translateX(0) scale(1) }
+    88%,100% { transform:translate(-50%,-50%) translateX(calc(-1 * var(--dx))) scale(1) }
   }
   /* El titulo SALE POR EL LADO DERECHO del isotipo: lo descubre una mascara */
-  @keyframes md-palabra{ 0%,58%{clip-path:inset(0 100% 0 0)} 76%,100%{clip-path:inset(0 0 0 0)} }
-  @keyframes md-entra  { 0%,62%{opacity:0;transform:translateY(10px)} 84%,100%{opacity:1;transform:translateY(0)} }
+  @keyframes md-palabra{ 0%,72%{clip-path:inset(0 100% 0 0)} 88%,100%{clip-path:inset(0 0 0 0)} }
+  @keyframes md-entra  { 0%,76%{opacity:0;transform:translateY(10px)} 94%,100%{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: reduce){ .play *{animation:none !important} }
   @media (max-width:900px){
     .hero{grid-template-columns:1fr;gap:var(--md-sp-6)}
@@ -202,23 +211,25 @@
     <div class="marco" id="careta">
       <div class="lienzo">
         <div class="capa capa--clara">
-          <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
+          <div class="zoom"><div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
               <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
               <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
             </svg>
-            <div class="word">Movimiento<br>Desencadenado</div></div>
+            <div class="word">Movimiento<br>Desencadenado</div>
+          </div></div>
         </div>
         <div class="capa capa--oscura">
-          <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
+          <div class="zoom"><div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
               <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
               <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
             </svg>
-            <div class="word">Movimiento<br>Desencadenado</div></div>
+            <div class="word">Movimiento<br>Desencadenado</div>
+          </div></div>
         </div>
         <div class="destello"></div>
       </div>
     </div>
-    <p class="pie"><b>Careta · 1920 × 1080 · 1,8 s.</b> El logo empieza descompuesto: sus dos mitades entran desde fuera, frenan separadas y encajan de un tirón <b>en el centro del cuadro</b>. En ese fotograma cambia todo a la vez, y después el título sale por el lado derecho del isotipo. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
+    <p class="pie"><b>Careta · 1920 × 1080 · 2,2 s.</b> Se arranca muy cerca del logo, con sus dos mitades fuera de cuadro. La cámara retrocede mientras se acercan muy despacio, y el retroceso aterriza en el mismo fotograma en que <b>encajan, como un eslabón</b>. Ahí cambia todo a la vez, y después el título sale por el lado derecho del isotipo. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
   </div>
 </header>
 
@@ -377,7 +388,7 @@
     <div><img class="pieza" src="assets/antes-intro.png" alt="Careta actual"><p class="pie"><b>Careta, hoy.</b> Degradado morado y logo a color.</p></div>
     <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido: 856 px de ancho, centrado exacto. Este es el fotograma final; <b>la careta entera es lo que se ha reproducido al abrir esta página</b>, y se puede volver a ver desde la portada.</p></div>
   </div>
-  <p class="note"><b>La careta cuenta la marca en dos segundos y medio</b>, y es lo que se ha reproducido en la portada de esta página. El logo empieza <b>descompuesto</b>: sus dos mitades, fuera de cuadro, una por cada lado. Entran suaves y cortas, frenan separadas y esperan un instante; entonces toman impulso y <b>encajan de un tirón, en el centro del cuadro</b>. Después el título <b>sale por el lado derecho del isotipo</b>, descubierto por una máscara, mientras el conjunto se recoloca para quedar centrado como lockup. La marca se llama Desencadenado: que el logo se forme delante de ti es el argumento de la pieza, no un adorno.</p>
+  <p class="note"><b>La careta cuenta la marca en dos segundos y medio</b>, y es lo que se ha reproducido en la portada de esta página. El logo empieza <b>descompuesto</b>: sus dos mitades, fuera de cuadro, una por cada lado. Se arranca <b>muy cerca</b>, a 4,4 aumentos, con las dos mitades fuera de cuadro por sus lados. La cámara <b>retrocede</b> mientras ellas se acercan muy despacio, y los dos movimientos terminan juntos: el retroceso aterriza en el mismo fotograma en que las piezas <b>encajan, como un eslabón</b>, en el centro del cuadro. Después el título <b>sale por el lado derecho del isotipo</b>, descubierto por una máscara, mientras el conjunto se recoloca para quedar centrado como lockup. La marca se llama Desencadenado: que el logo se forme delante de ti es el argumento de la pieza, no un adorno.</p>
   <p class="note"><b>Y el encaje es un golpe, no una transición.</b> En ese fotograma cambia todo a la vez: la superficie pasa a clara, el logo a negro, y salta un <b>fotograma de impacto</b> a blanco pleno de 33 ms que el ojo retiene y hace que se lea como golpe y no como un fallo de reproducción. Después, la energía sobrante: sacudida del cuadro de 6 px amortiguada en 100 ms y asentamiento del logo. <b>El cambio no barre, ni se expande, ni deja rastro</b>: no tiene forma propia, y por eso todo el mérito se lo lleva el movimiento que lo ha preparado. Eso, y el instante de silencio justo antes. Cuando esto se renderice a 1920 × 1080, el sonido cae en el fotograma del encaje.</p>
   <p class="note">Los logos de plataforma son los del cierre original, <b>Spotify y Apple Podcasts</b>, en su sitio y a su tamaño medidos (Spotify a 239 × 77 desde el margen, Apple Podcasts a 318 × 72, con 100 px entre los dos). Son marcas de terceros: no se recolorean ni se rehacen. Lo único que elegimos es la versión que contrasta con la superficie. Es también la única excepción al radio 0 del sistema, y conviene que esté escrita para que nadie intente "arreglarla".</p>
 </section>
@@ -542,7 +553,7 @@
     const lock = marco.querySelector('.capa--clara .lockup');
     const aire = parseFloat(getComputedStyle(word).marginLeft) || 0;
     const dx = (aire + word.getBoundingClientRect().width) / 2;
-    marco.querySelectorAll('.lockup').forEach(el=>el.style.setProperty('--dx', dx.toFixed(1)+'px'));
+    marco.style.setProperty('--dx', dx.toFixed(1)+'px');
     window.DX = dx.toFixed(1);
   }
   addEventListener('resize', contacto);
