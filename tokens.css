@@ -128,19 +128,22 @@
 /* ============================================================================
    CTA — un solo botón, tres pesos. Nunca dos primarios en la misma pantalla.
    ========================================================================== */
+/* Altura unica de 56 px: la misma que los logos de plataforma, para que hagan
+   linea cuando van juntos. El raton NO cambia el color del acento ni levanta el
+   boton (eso es lenguaje de plantilla): INVIERTE relleno y filete. */
 .md-btn{
-  display:inline-flex; align-items:center; gap:var(--md-sp-3);
+  display:inline-flex; align-items:center; gap:var(--md-sp-3); height:56px;
   font-family:var(--md-font); font-weight:700; font-size:var(--md-size-body);
-  letter-spacing:0.01em; padding:18px 34px; border:var(--md-rule) solid transparent;
+  letter-spacing:0.01em; padding:0 28px; border:var(--md-rule) solid transparent;
   border-radius:var(--md-radius); text-decoration:none; cursor:pointer;
-  transition:transform .16s ease, background-color .16s ease, color .16s ease;
+  transition:background-color .16s ease, color .16s ease, border-color .16s ease;
 }
-.md-btn:hover{ transform:translateY(-2px) }
 .md-btn:focus-visible{ outline:3px solid var(--md-coral); outline-offset:3px }
 
-/* Primario: relleno coral, tinta OSCURA (con blanco daría 2.89, falla) */
+/* Primario: relleno coral, tinta OSCURA (con blanco daría 2.89, falla).
+   Al pasar el raton se vacia: filete de acento y texto de acento. */
 .md-btn--primary{ background:var(--md-coral); color:var(--md-on-coral) }
-.md-btn--primary:hover{ background:#FF8674 }
+.md-btn--primary:hover{ background:transparent; color:var(--md-coral); border-color:var(--md-coral) }
 
 /* Secundario: filete en la tinta de la superficie (blanco sobre la oscura,
    negro sobre la clara). El acento se reserva para el primario: dos elementos

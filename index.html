@@ -29,7 +29,7 @@
   .pie b{opacity:1}
   .fuera{padding:var(--md-sp-5);font-size:.95rem;line-height:1.5;
          border:1px solid color-mix(in srgb, var(--md-ink) 18%, transparent)}
-  .fuera b{display:block;margin-bottom:6px}
+  .fuera > b:first-child{display:block;margin-bottom:8px}
   .abierto{border-top:2px solid var(--md-coral);padding-top:var(--md-sp-4);margin-top:var(--md-sp-6)}
   table.med{border-collapse:collapse;width:100%;max-width:660px;font-size:.9rem}
   table.med th,table.med td{text-align:left;padding:10px 14px 10px 0;font-variant-numeric:tabular-nums;
@@ -39,7 +39,7 @@
   /* portada de la propuesta: claim a la izquierda, logo grande a la derecha */
   .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:var(--md-sp-8);align-items:center;
         padding:calc(var(--md-sp-8) * 1.4) var(--md-margin)}
-  .hero img{width:100%;max-width:620px;height:auto;justify-self:end}
+  .hero img{width:100%;max-width:760px;height:auto;justify-self:end}
   @media (max-width:900px){ .hero{grid-template-columns:1fr;gap:var(--md-sp-6)} .hero img{justify-self:start;max-width:88%} }
 
   .logobox{display:flex;align-items:center;justify-content:center;padding:var(--md-sp-8) var(--md-sp-6);min-height:220px;
@@ -62,6 +62,15 @@
   .filete .vert b{display:block;font-weight:900;font-size:1.4rem;line-height:1}
   .filete .vert span{font-size:.85rem;color:var(--md-coral)}
   .filete p{margin:0;font-size:.88rem;line-height:1.5;opacity:.78}
+
+  /* fichas de la vuelta de unificacion */
+  .demo2{display:flex;flex-direction:column;gap:10px;margin:var(--md-sp-4) 0}
+  .demo2 .l2{height:2px;background:var(--md-coral);width:100%}
+  .demo2 .l1{height:1px;background:color-mix(in srgb, var(--md-ink) 14%, transparent);width:100%}
+  .num{font-weight:900;font-size:3.1rem;line-height:1;letter-spacing:-.02em;color:transparent;white-space:nowrap;
+       -webkit-text-stroke:1.4px var(--md-coral)}
+  .cita-demo{font-weight:900;font-size:1.75rem;line-height:1.08;letter-spacing:-.03em;margin:var(--md-sp-3) 0 var(--md-sp-4)}
+  .cita-demo svg{vertical-align:baseline}
 
   /* miniatura, con la geometria del canal */
   .th{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;container-type:inline-size;
@@ -86,7 +95,7 @@
     <h1 class="md-claim" style="margin:0;max-width:14ch">Propuesta de <span class="md-hl">marca</span></h1>
     <p class="md-lead" style="max-width:52ch;margin-top:var(--md-sp-5);opacity:.88">Una evolución del sistema que ya usa el canal, no un cambio de marca. Todo lo que hay aquí está medido sobre las piezas publicadas, o calculado. Estado a 10 de septiembre.</p>
   </div>
-  <img src="assets/logo-blanco-v.png" alt="Movimiento Desencadenado">
+  <img src="assets/logo-blanco-h.png" alt="Movimiento Desencadenado">
 </header>
 
 <section class="sec md-light">
@@ -244,7 +253,7 @@
     <div><img class="pieza" src="assets/antes-intro.png" alt="Careta actual"><p class="pie"><b>Careta, hoy.</b> Degradado morado y logo a color.</p></div>
     <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido (856 px de ancho, centrado) y debajo el filete: en movimiento crece de izquierda a derecha, que es el gesto de la marca.</p></div>
   </div>
-  <p class="note">Los botones de plataforma son el <b>botón secundario del sistema</b>: filete, radio 0, la tinta de la superficie. Sustituyen a los badges de tienda, que traían su propio color y rompían la paleta.</p>
+  <p class="note">Los logos de plataforma son los del cierre original, <b>Spotify y Apple Podcasts</b>, en su sitio y a su tamaño medidos (Spotify a 239 × 77 desde el margen, Apple Podcasts a 318 × 72, con 100 px entre los dos). Son marcas de terceros: no se recolorean ni se rehacen. Lo único que elegimos es la versión que contrasta con la superficie. Es también la única excepción al radio 0 del sistema, y conviene que esté escrita para que nadie intente "arreglarla".</p>
 </section>
 
 <section class="sec md-dark">
@@ -277,18 +286,80 @@
 
 <section class="sec md-dark">
   <p class="sechead">Lo que se jubila</p>
-  <div class="grid g2">
+  <p class="note" style="margin-top:0">La miniatura del episodio 63, la pieza de la que salió el formato nuevo, reúne casi todo lo que sale del sistema. Debajo, la misma pieza con la misma geometría.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div><img class="pieza" src="assets/antes-miniatura.png" alt="Miniatura del episodio 63, sistema viejo"><p class="pie"><b>Hoy.</b> Degradado púrpura ocupando un tercio, dos bandas diagonales en coral, invitada en blanco y negro y la cita cortada por el borde.</p></div>
     <div>
-      <img class="pieza" src="assets/antes-portada.png" alt="Portada de episodio del sistema viejo" style="max-width:300px">
-      <p class="pie">La portada de episodio de hoy reúne casi todo lo que sale: píldora púrpura, invitado en blanco y negro, banda diagonal y dos acentos compitiendo.</p>
-    </div>
-    <div class="grid" style="gap:var(--md-sp-4);align-content:start">
-      <div class="fuera"><b>El púrpura, en cualquier uso.</b>También dentro del logo: la píldora de "Episodio NN" y el degradado de las miniaturas, que llegaba al 10,4 % del área.</div>
-      <div class="fuera"><b>Los dos corales.</b>#F36F62 y #BE3A2B, y el #CC1F0F que se probó antes: tiraba a granate.</div>
-      <div class="fuera"><b>La banda diagonal.</b>La sustituye la flecha del isotipo, monocroma y confinada a un lado.</div>
-      <div class="fuera"><b>El invitado en blanco y negro.</b>Y el logo a color, que pasa a archivo histórico.</div>
+      <div class="th clara">
+        <svg class="flecha" viewBox="90.808594 52.21875 72.894531 97.390625" preserveAspectRatio="none"><path d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z" fill-rule="nonzero"/></svg>
+        <p class="ep">episodio 63</p>
+        <img class="fig" src="assets/ponente-color.png" alt="">
+        <p class="cita">"Sal&iacute; del dolor<br>cr&oacute;nico yo sola"</p>
+      </div>
+      <p class="pie"><b>Con el sistema.</b> Misma geometr&iacute;a, misma cita, misma persona: cambia lo que sobra.</p>
     </div>
   </div>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div class="fuera"><b>El p&uacute;rpura, en cualquier uso.</b>Tambi&eacute;n dentro del logo: la p&iacute;ldora de "Episodio NN" y el degradado de las miniaturas, que llegaba al 10,4 % del &aacute;rea.</div>
+    <div class="fuera"><b>Los dos corales.</b>#F36F62 y #BE3A2B, y el #CC1F0F que se prob&oacute; antes: tiraba a granate.</div>
+    <div class="fuera"><b>La banda diagonal.</b>La sustituye la flecha del isotipo, monocroma y confinada a un lado.</div>
+    <div class="fuera"><b>El invitado en blanco y negro.</b>Y el logo a color, que pasa a archivo hist&oacute;rico.</div>
+  </div>
+</section>
+
+<section class="sec md-dark">
+  <p class="sechead">La vuelta que conviene dar</p>
+  <h2 class="md-claim" style="font-size:var(--md-size-h1);margin:0 0 var(--md-sp-5);max-width:24ch">Menos piezas, <span class="md-hl">usadas en más sitios</span></h2>
+  <p class="note" style="margin-top:0">El sistema ya no necesita elementos nuevos: necesita que los que tiene se usen igual en todas partes. Estas seis decisiones son pequeñas y hacen que dos piezas cualesquiera se reconozcan como de la misma marca.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div class="fuera">
+      <b>1 · Dos grosores de línea, y ninguno más</b>
+      <div class="demo2"><span class="l2"></span><span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6">2 px · significa</span><span class="l1"></span><span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6">1 px · separa</span></div>
+      Hoy conviven cuatro: el filete de 2 px, el borde de botón de 2, el borde de tarjeta de 1 y los separadores de 1. La regla: <b>2 px cuando la línea significa algo</b> (progreso, acento, borde de botón) y <b>1 px cuando solo separa</b>, siempre en la tinta de la superficie al 14 %.
+    </div>
+    <div class="fuera">
+      <b>2 · Los botones, a la altura de los logos</b>
+      <div class="row" style="margin:var(--md-sp-4) 0">
+        <a class="md-btn md-btn--primary" href="#">Escuchar</a>
+        <a class="md-btn md-btn--ghost" href="#">Ver todos</a>
+        <img src="assets/plat-spotify-blanco.png" alt="Spotify" style="height:56px">
+      </div>
+      <b>56 px de alto</b> para botones y logos de plataforma, para que hagan línea cuando van juntos. Y el ratón no cambia el color del acento ni levanta el botón: <b>invierte</b> relleno y filete. Ahora mismo el primario aclara a un coral que no existe en la paleta.
+    </div>
+    <div class="fuera">
+      <b>3 · Las comillas, en toda cita</b>
+      <p class="cita-demo"><svg width="0.34em" height="0.34em" viewBox="0 0 100 100" style="overflow:visible"><g fill="#E8503C"><rect x="10" y="0" width="17" height="66" rx="2" transform="rotate(19 18 33)"/><rect x="52" y="0" width="17" height="66" rx="2" transform="rotate(19 60 33)"/></g></svg>El cuerpo es la constante<svg width="0.34em" height="0.34em" viewBox="0 0 100 100" style="overflow:visible"><g fill="#E8503C"><rect x="10" y="0" width="17" height="66" rx="2" transform="rotate(19 18 33)"/><rect x="52" y="0" width="17" height="66" rx="2" transform="rotate(19 60 33)"/></g></svg></p>
+      Dos barras al ángulo de la flecha. Hoy solo viven en la miniatura de YouTube y son de lo más reconocible que tiene la marca: van también en la tarjeta de cita, en el destacado de un artículo y en cualquier testimonio.
+    </div>
+    <div class="fuera">
+      <b>4 · El número en contorno, como marca de sección</b>
+      <p class="num" style="margin:var(--md-sp-3) 0">episodio 63</p>
+      Igual que las comillas: existe en una pieza y sirve en todas. Numera capítulos, marca secciones y hace de marca de agua sin gastar acento, porque es solo contorno.
+    </div>
+    <div class="fuera">
+      <b>5 · La figura, siempre igual</b>
+      A sangre por un borde, nunca recortada en círculo, y con la cara ocupando en torno al 40 % del alto de la pieza (medido: 42 % en la miniatura). Es lo que hace que dos piezas de formatos distintos se parezcan.
+    </div>
+    <div class="fuera">
+      <b>6 · Radio 0, y una excepción escrita</b>
+      Nada de lo nuestro redondea: el isotipo es todo aristas. La única excepción son los <b>logos de plataforma</b>, que son marcas de terceros y van tal cual. Escrito, para que nadie intente arreglarlo.
+    </div>
+  </div>
+</section>
+
+<section class="sec md-light">
+  <p class="sechead">La web</p>
+  <h2 class="md-claim" style="font-size:var(--md-size-h1);margin:0 0 var(--md-sp-5);max-width:26ch">La página no inventa nada: <span class="md-hl">usa las mismas piezas</span></h2>
+  <p class="note" style="margin-top:0">Una web de podcast es, en el fondo, cuatro cosas repetidas: una cabecera de sección, una tarjeta de episodio, una cita y un reproductor. Las cuatro salen de lo que ya está decidido, sin componentes nuevos.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6)">
+    <div class="fuera"><b>Cabecera de sección = rótulo + filete</b>El mismo bloque de las placas de vídeo: rótulo en versal y la línea que lo continúa hasta antes del margen. Una por sección, y con eso la página tiene ritmo sin decoración.</div>
+    <div class="fuera"><b>Índice y reproductor = la barra de progreso</b>El filete del carrusel dice en qué tarjeta vas; en la web dice por qué minuto va el episodio y por dónde va la lectura. Es literalmente el mismo componente haciendo su trabajo.</div>
+    <div class="fuera"><b>Tarjeta de episodio</b>Sin sombra, sin radio, sin borde de color: superficie, media 16:9 a color, marca de episodio con su filete y titular en caja mixta. La jerarquía la da el tamaño, no la caja.</div>
+    <div class="fuera"><b>Cita destacada</b>Las comillas de marca y el claim en Black. Es la tarjeta de cita del carrusel puesta en una columna de texto.</div>
+    <div class="fuera"><b>Ritmo de superficies</b>Sección a sección, como en esta misma página. Es lo que evita el muro blanco y lo que hace que la web se lea como la marca y no como una plantilla.</div>
+    <div class="fuera"><b>Un solo primario por pantalla</b>Escuchar el episodio. Todo lo demás es secundario o enlace: es la regla que impide que la página se llene de botones de acento.</div>
+  </div>
+  <p class="note"><b>Lo que hay que rehacer:</b> el prototipo de la web va con los tokens de julio (coral viejo, púrpura, fotos en blanco y negro y la banda diagonal). No es un retoque de CSS: hay que pasarlo a estos tokens y sustituir la diagonal por la flecha.</p>
 </section>
 
 <section class="sec md-light">
@@ -307,7 +378,10 @@
     <tr><td>Web</td><td>Falta</td><td>El prototipo va con los tokens de julio</td></tr>
     <tr><td>Presentación y documento de marca</td><td>Falta</td><td>Esta página es el borrador</td></tr>
   </table>
-  <p class="note">Nada de lo que falta cambia el sistema: son plantillas nuevas hechas con las mismas piezas.</p>
+  <div class="grid g2" style="margin-top:var(--md-sp-6);align-items:start">
+    <div><img class="pieza" src="assets/antes-portada.png" alt="Portada de episodio actual" style="max-width:280px"><p class="pie"><b>La que falta.</b> La portada de episodio, tal y como es hoy. Es la pieza más publicada después de la miniatura y todavía no tiene versión con el sistema nuevo: cuando la tenga, la píldora será una marca de episodio con su filete, el invitado irá a color y la banda diagonal será la flecha.</p></div>
+    <div><p class="note" style="margin-top:0">Nada de lo que falta cambia el sistema: son plantillas nuevas hechas con las mismas piezas. El orden que propongo es <b>portada de episodio</b> (la que más se publica), luego <b>animar las placas</b> y el <b>rótulo de nombre</b>, y con eso el pack de vídeo queda cerrado; la web va después, porque es la que más trabajo lleva y la que menos urge.</p></div>
+  </div>
 </section>
 
 <footer class="sec md-dark">
