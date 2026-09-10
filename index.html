@@ -39,26 +39,21 @@
   /* PORTADA: la careta, dentro de su MARCO FIJO 1920 x 1080 (entradilla de
      YouTube). La pagina no cambia de color: cambia la pieza.
 
-     LA DINAMICA (dictada por Javi): LA FLECHA ARRASTRA EL CAMBIO.
-       1. El frente entre lo claro y lo oscuro va PEGADO A LA PUNTA de la
-          flecha desde que entra en cuadro. Lo que la flecha ya ha recorrido
-          queda claro; lo que le falta sigue oscuro. El cambio no es una
-          consecuencia posterior: es el rastro del movimiento.
-       2. Por eso la flecha se ve PARTIDA EN DOS TINTAS mientras viaja: el
-          cuerpo, en territorio claro, va en negro; la punta, que todavia esta
-          en lo oscuro, va en blanco. Sale gratis de tener dos capas completas
-          (la oscura con su logo y la clara con el suyo) separadas por el
-          frente: el logo cambia de tinta por POSICION, nunca por tiempo.
-       3. La otra mitad del logo YA ESTA, esperando a la derecha en tono sobre
-          tono (#333B47 sobre la oscura). No aparece de la nada: se revela
-          cuando el frente la alcanza y pasa a negro sobre claro.
-       4. Al llegar la flecha a esa pieza hay CONTACTO: el resto del cuadro se
-          aclara de golpe (un fotograma), destello de 33 ms, sacudida
-          amortiguada, la pieza golpeada acusa el empujon y el logo asienta.
-       5. La flecha ACELERA hasta el impacto (no frena antes: el frenazo lo da
-          el golpe), se estira al viajar y se aplasta al chocar, y el
-          desenfoque de movimiento es maximo donde es maxima la velocidad.
-       6. El texto espera a que el golpe se haya asentado.                      */
+     LA DINAMICA: EL MOVIMIENTO PREPARA EL GOLPE, Y EL CAMBIO NO TIENE FORMA.
+       1. El logo empieza DESCOMPUESTO: sus dos mitades, fuera de cuadro, una
+          por cada lado. La marca se llama Desencadenado; que se forme es el
+          argumento de la pieza.
+       2. Entran SUAVES y frenan separadas, con un hueco entre ellas. Ahi hay
+          una pausa de tres cuartos de segundo: el silencio antes del golpe es
+          lo que hace que el golpe exista.
+       3. Toman impulso hacia atras (anticipacion, 4 fotogramas) y ENCAJAN de
+          un tiron: 96 ms, con desenfoque de movimiento solo en ese tramo.
+       4. En el fotograma del encaje, TODO cambia a la vez: la superficie pasa
+          a clara, el logo a negro, destello de 33 ms, sacudida amortiguada y
+          asentamiento. El cambio no barre, ni se expande, ni deja rastro: no
+          tiene forma propia, y por eso todo el merito se lo lleva el
+          movimiento que lo ha preparado.
+       5. El texto no entra hasta que el golpe se ha asentado.                  */
   .hero{position:relative;display:grid;grid-template-columns:.86fr 1.14fr;
         gap:var(--md-sp-8);align-items:center;
         padding:calc(var(--md-sp-8) * 1.2) var(--md-margin)}
@@ -69,10 +64,8 @@
   .lienzo{position:absolute;inset:0}
   .capa{position:absolute;inset:0}
   .capa--oscura{background:var(--md-surface-dark);color:#fff}
-  .capa--clara {background:var(--md-surface-light);color:#000;
-                clip-path:inset(0 0 0 0)}
-  /* la segunda pieza espera en tono sobre tono sobre la superficie oscura */
-  .capa--oscura .lockup .iso .eme{ fill:var(--md-flecha-dark) }
+  .capa--clara {background:var(--md-surface-light);color:#000}
+  .capa--oscura{ opacity:0 }   /* sin .play se ve el fotograma final */
   .destello{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
   /* el lockup, centrado exacto y a su tamano medido: 856 de 1920 (44,6 %) con el
      simbolo a 173 de 1080 (16 % del alto = 9 % del ancho) */
@@ -87,65 +80,63 @@
           padding:0 0 2px;cursor:pointer;font-family:var(--md-font);font-weight:700;
           color:var(--md-coral);border-bottom:var(--md-rule) solid currentColor}
 
-  /* Linea de tiempo de 2,6 s. El CONTACTO cae al 42,3 % = 1,10 s. */
-  .play .lienzo     { animation: md-sacude   2.6s linear forwards }
-  .play .capa--clara{ animation: md-frente   2.6s linear forwards }
-  .play .flecha-iso { animation: md-vuelo    2.6s linear forwards }
-  .play .eme        { animation: md-eme      2.6s linear forwards }
-  .play .lockup     { animation: md-asienta  2.6s linear forwards }
-  .play .destello   { animation: md-destello 2.6s linear forwards }
-  .play .word       { animation: md-palabra  2.6s ease-out forwards }
-  .play .hero__txt  { animation: md-entra    2.6s ease-out forwards }
+  /* Linea de tiempo de 2,4 s. El ENCAJE cae al 64 % = 1,54 s. */
+  .play .lienzo     { animation: md-sacude   2.4s linear forwards }
+  .play .capa--oscura{ animation: md-corte   2.4s linear forwards }
+  .play .flecha-iso { animation: md-flecha   2.4s linear forwards }
+  .play .eme        { animation: md-eme      2.4s linear forwards }
+  .play .lockup     { animation: md-asienta  2.4s linear forwards }
+  .play .destello   { animation: md-destello 2.4s linear forwards }
+  .play .word       { animation: md-palabra  2.4s ease-out forwards }
+  .play .hero__txt  { animation: md-entra    2.4s ease-out forwards }
 
-  /* 1 y 2: el vuelo. Acelera (los tramos crecen), se estira, y el desenfoque es
-     maximo donde la velocidad es maxima. En el contacto: parado en seco y
-     aplastado. Luego rebota y asienta. */
-  @keyframes md-vuelo {
-    0%      { transform:translateX(-420px) scale(1,1);       filter:blur(0) }
-    12%     { transform:translateX(-400px) scale(1.04,.98);  filter:blur(3px) }
-    26%     { transform:translateX(-330px) scale(1.16,.94);  filter:blur(8px) }
-    36%     { transform:translateX(-200px) scale(1.30,.89);  filter:blur(15px) }
-    42.3%   { transform:translateX(7px)    scale(.88,1.12);  filter:blur(0) }
-    47%     { transform:translateX(-3px)   scale(1.04,.97);  filter:blur(0) }
-    52%     { transform:translateX(1px)    scale(.99,1.01);  filter:blur(0) }
-    58%,100%{ transform:translateX(0)      scale(1,1);       filter:blur(0) }
+  /* Las dos mitades entran suaves desde su lado, frenan separadas, esperan
+     un cuarto de segundo, toman impulso hacia atras y encajan de un tiron.
+     El desenfoque de movimiento solo existe en ese tiron. */
+  @keyframes md-flecha {
+    0%     { transform:translateX(-520px); filter:blur(0);
+             animation-timing-function:cubic-bezier(.22,.55,.3,1) }
+    46%    { transform:translateX(-48px);  animation-timing-function:linear }
+    56%    { transform:translateX(-48px);  animation-timing-function:ease-in }
+    60%    { transform:translateX(-60px);  filter:blur(0);
+             animation-timing-function:cubic-bezier(.72,0,.92,.42) }
+    62.5%  { filter:blur(10px) }
+    64%    { transform:translateX(7px);    filter:blur(0);
+             animation-timing-function:ease-out }
+    69%    { transform:translateX(-2px) }
+    74%,100%{ transform:translateX(0) }
   }
-  /* La pieza que espera solo ACUSA el golpe: ya estaba en cuadro. */
   @keyframes md-eme {
-    0%,42.29%{ transform:translateX(0) }
-    42.3%    { transform:translateX(17px) }
-    50%      { transform:translateX(-3px) }
-    56%,100% { transform:translateX(0) }
+    0%     { transform:translateX(520px);  filter:blur(0);
+             animation-timing-function:cubic-bezier(.22,.55,.3,1) }
+    46%    { transform:translateX(48px);   animation-timing-function:linear }
+    56%    { transform:translateX(48px);   animation-timing-function:ease-in }
+    60%    { transform:translateX(60px);   filter:blur(0);
+             animation-timing-function:cubic-bezier(.72,0,.92,.42) }
+    62.5%  { filter:blur(10px) }
+    64%    { transform:translateX(-7px);   filter:blur(0);
+             animation-timing-function:ease-out }
+    69%    { transform:translateX(2px) }
+    74%,100%{ transform:translateX(0) }
   }
-  /* EL FRENTE, atado a la punta de la flecha. La correspondencia no es a ojo:
-     una unidad del isotipo son 0,09243 % del ancho del marco (el simbolo mide
-     10,37 % y su viewBox 112,164 unidades), y la punta en reposo cae en el
-     33,67 % (el punto de contacto medido). Asi, para cada desplazamiento tx de
-     la flecha, la punta esta en 33,67 + tx x 0,09243. */
-  @keyframes md-frente {
-    0%     { clip-path:inset(0 100%    0 0) }   /* punta en -5,2 %: aun fuera */
-    12%    { clip-path:inset(0 100%    0 0) }   /* punta en -3,3 %            */
-    26%    { clip-path:inset(0 96.83%  0 0) }   /* punta en 3,2 %: entra      */
-    36%    { clip-path:inset(0 84.81%  0 0) }   /* punta en 15,2 %            */
-    42.3%  { clip-path:inset(0 65.68%  0 0) }   /* CONTACTO: el rastro llega al 34,3 % */
-    43.2%,100%{ clip-path:inset(0 0    0 0) }   /* el golpe aclara el resto   */
-  }
-  /* 6: destello de dos fotogramas a 60 fps, sacudida y asentamiento */
-  @keyframes md-destello{ 0%,42.29%{opacity:0} 42.3%{opacity:.85} 43.6%{opacity:.85} 45.5%,100%{opacity:0} }
+  /* El cambio de superficie: un fotograma, en todo el cuadro, sin forma propia */
+  @keyframes md-corte  { 0%,63.99%{opacity:1} 64%,100%{opacity:0} }
+  /* Fotograma de impacto: blanco pleno 33 ms y apagado en 4 fotogramas mas */
+  @keyframes md-destello{ 0%,63.99%{opacity:0} 64%{opacity:.85} 65.4%{opacity:.85} 67.4%,100%{opacity:0} }
   @keyframes md-sacude {
-    0%,42.29%{ transform:translate(0,0) }
-    43%  { transform:translate(-6px,3px) }
-    44%  { transform:translate(4px,-2px) }
-    45%  { transform:translate(-2px,1px) }
-    46%,100%{ transform:translate(0,0) }
+    0%,63.99%{ transform:translate(0,0) }
+    64.7%{ transform:translate(-6px,3px) }
+    65.7%{ transform:translate(4px,-2px) }
+    66.7%{ transform:translate(-2px,1px) }
+    67.7%,100%{ transform:translate(0,0) }
   }
   @keyframes md-asienta {
-    0%,42.29%{ transform:translate(-50%,-50%) scale(1) }
-    42.3%    { transform:translate(-50%,-50%) scale(1.04) }
-    51%,100% { transform:translate(-50%,-50%) scale(1) }
+    0%,63.99%{ transform:translate(-50%,-50%) scale(1) }
+    64%      { transform:translate(-50%,-50%) scale(1.05) }
+    72%,100% { transform:translate(-50%,-50%) scale(1) }
   }
-  @keyframes md-palabra{ 0%,47%{opacity:0;transform:translateX(-14px)} 61%,100%{opacity:1;transform:translateX(0)} }
-  @keyframes md-entra  { 0%,50%{opacity:0;transform:translateY(10px)} 70%,100%{opacity:1;transform:translateY(0)} }
+  @keyframes md-palabra{ 0%,66%{opacity:0;transform:translateX(-14px)} 80%,100%{opacity:1;transform:translateX(0)} }
+  @keyframes md-entra  { 0%,68%{opacity:0;transform:translateY(10px)} 86%,100%{opacity:1;transform:translateY(0)} }
   @media (prefers-reduced-motion: reduce){ .play *{animation:none !important} }
   @media (max-width:900px){
     .hero{grid-template-columns:1fr;gap:var(--md-sp-6)}
@@ -199,14 +190,14 @@
   <div class="hero__marco">
     <div class="marco" id="careta">
       <div class="lienzo">
-        <div class="capa capa--oscura">
+        <div class="capa capa--clara">
           <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
               <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
               <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
             </svg>
             <div class="word">Movimiento<br>Desencadenado</div></div>
         </div>
-        <div class="capa capa--clara">
+        <div class="capa capa--oscura">
           <div class="lockup"><svg class="iso" viewBox="90.808594 52.21875 112.164062 97.390625" role="img" aria-label="Movimiento Desencadenado">
               <path class="flecha-iso" d="M 90.8086 74.0430 L 90.8086 52.2188 L 163.7031 100.7773 L 90.8086 149.6094 L 90.8086 81.9531 L 109.7383 95.3203 L 109.7383 114.6914 L 130.3633 100.9141 Z"/>
               <path class="eme" d="M 152.9648 85.2266 L 170.7656 96.6836 L 184.0469 87.7070 L 184.0469 136.7891 L 202.9727 149.6094 L 202.9727 52.2188 Z"/>
@@ -216,7 +207,7 @@
         <div class="destello"></div>
       </div>
     </div>
-    <p class="pie"><b>Careta · 1920 × 1080.</b> La flecha arrastra el cambio: lo que ya ha recorrido queda claro, y por eso se la ve partida en dos tintas mientras cruza. La otra mitad del logo ya está, esperando en tono sobre tono, y se revela cuando el frente la alcanza. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
+    <p class="pie"><b>Careta · 1920 × 1080.</b> El logo empieza descompuesto: sus dos mitades entran desde fuera, frenan separadas, esperan, y encajan de un tirón. En el fotograma del encaje cambia todo a la vez. El marco es el de una entradilla de YouTube: lo que cambia es la pieza, no la página.</p>
   </div>
 </header>
 
@@ -375,8 +366,8 @@
     <div><img class="pieza" src="assets/antes-intro.png" alt="Careta actual"><p class="pie"><b>Careta, hoy.</b> Degradado morado y logo a color.</p></div>
     <div><img class="pieza" src="export/MD-placa-intro.png" alt="Careta 2.0"><p class="pie"><b>Careta repintada.</b> El logo en su sitio medido: 856 px de ancho, centrado exacto. Este es el fotograma final; <b>la careta entera es lo que se ha reproducido al abrir esta página</b>, y se puede volver a ver desde la portada.</p></div>
   </div>
-  <p class="note"><b>La careta cuenta la marca en dos segundos y medio</b>, y es lo que se ha reproducido en la portada de esta página. <b>La flecha arrastra el cambio</b>: el frente entre lo oscuro y lo claro va pegado a su punta desde que entra en cuadro, así que lo que el movimiento ya ha recorrido queda claro y lo que le falta sigue oscuro. Mientras cruza, <b>la propia flecha se ve partida en dos tintas</b>: el cuerpo, ya en territorio claro, en negro; la punta, todavía en lo oscuro, en blanco. La otra mitad del logo <b>ya está en cuadro</b> desde el principio, esperando en tono sobre tono, y se revela cuando el frente la alcanza. No hay ningún elemento nuevo: son las dos mitades del logo que ya existen y las dos superficies del sistema.</p>
-  <p class="note"><b>Y el contacto es un golpe, no una transición.</b> Cuando la flecha alcanza a la otra pieza, el resto del cuadro se aclara <b>en un fotograma</b>, no con un fundido; lleva un <b>fotograma de impacto</b> a blanco pleno de 33 ms, que el ojo retiene y hace que se lea como golpe y no como un fallo de reproducción; la pieza golpeada acusa el empujón y vuelve; y la energía sobrante se reparte al cuadro con una sacudida de 6 px amortiguada en 100 ms y un asentamiento del logo. La flecha, además, <b>acelera</b> hasta el impacto en vez de frenar antes de llegar (el frenazo lo da el golpe), se estira al viajar y se aplasta al chocar, y el desenfoque de movimiento es máximo donde es máxima la velocidad. Cuando esto se renderice a 1920 × 1080, el sonido cae en el fotograma del golpe.</p>
+  <p class="note"><b>La careta cuenta la marca en dos segundos y medio</b>, y es lo que se ha reproducido en la portada de esta página. El logo empieza <b>descompuesto</b>: sus dos mitades, fuera de cuadro, una por cada lado. Entran suaves, frenan separadas y esperan un cuarto de segundo; entonces toman impulso y <b>encajan de un tirón</b>. La marca se llama Desencadenado: que el logo se forme delante de ti es el argumento de la pieza, no un adorno.</p>
+  <p class="note"><b>Y el encaje es un golpe, no una transición.</b> En ese fotograma cambia todo a la vez: la superficie pasa a clara, el logo a negro, y salta un <b>fotograma de impacto</b> a blanco pleno de 33 ms que el ojo retiene y hace que se lea como golpe y no como un fallo de reproducción. Después, la energía sobrante: sacudida del cuadro de 6 px amortiguada en 100 ms y asentamiento del logo. <b>El cambio no barre, ni se expande, ni deja rastro</b>: no tiene forma propia, y por eso todo el mérito se lo lleva el movimiento que lo ha preparado. Eso, y el cuarto de segundo de silencio justo antes. Cuando esto se renderice a 1920 × 1080, el sonido cae en el fotograma del encaje.</p>
   <p class="note">Los logos de plataforma son los del cierre original, <b>Spotify y Apple Podcasts</b>, en su sitio y a su tamaño medidos (Spotify a 239 × 77 desde el margen, Apple Podcasts a 318 × 72, con 100 px entre los dos). Son marcas de terceros: no se recolorean ni se rehacen. Lo único que elegimos es la versión que contrasta con la superficie. Es también la única excepción al radio 0 del sistema, y conviene que esté escrita para que nadie intente "arreglarla".</p>
 </section>
 
